@@ -7,4 +7,22 @@ div, section, h1, h2, h3, p, ul, li, img, a {
 .page {
   background-color: #000000;
   height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  margin: 45px 200px 0;
+  width: 100%;
+  max-width: 880px;
+  max-height: 73px;
+  border-bottom: 1px #545454 solid;
+}
+
+.header__logo {
+  background-image: url("./images/Vector.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 173px;
+  height: 33px;
 }
