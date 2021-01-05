@@ -1,0 +1,7 @@
+.places__heart {
+  width: 20.76px;
+  height: 18.13px;
+  align-self: flex-end;
+  background-image: url("../../../images/heart.svg");
+  background-size: contain;
+}
