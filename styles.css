@@ -6,7 +6,6 @@ div, section, h1, h2, h3, p, ul, li, img, a {
 
 .page {
   background-color: #000000;
-  height: 100vh;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -83,4 +82,46 @@ div, section, h1, h2, h3, p, ul, li, img, a {
   height: 50px;
   width: 100%;
   max-width: 150px;
+}
+
+.places {
+  padding-top: 50px;
+}
+
+.places__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px 17px;
+}
+
+.places__card {
+  height: 361px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.places__image {
+  max-width: 282px;
+  border-radius: 10px 10px 0 0;
+}
+
+.places__title-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 25px 15px 31px 21px;
+}
+
+.places__title {
+  margin: 0;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29.05px;
+}
+
+.places__heart {
+  width: 20.76px;
+  height: 18.13px;
+  align-self: flex-end;
+  background-image: url("./images/heart.svg");
+  background-size: contain;
 }
