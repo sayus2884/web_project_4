@@ -13,6 +13,14 @@
   border: none;
 }
 
+.edit__close:hover {
+  cursor: pointer;
+}
+
 .edit__close:focus {
   outline: none;
+}
+
+.edit__close:active {
+  opacity: 0.6;
 }

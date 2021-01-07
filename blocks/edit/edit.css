@@ -6,6 +6,7 @@
 @import url("./__input-container/edit__input-container.css");
 @import url("./__item/edit__item.css");
 @import url("./__title/edit__title.css");
+@import url("./_hidden/edit_hidden.css");
 
 .edit {
   position: fixed;
@@ -19,6 +20,4 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
-  display: none;
 }
