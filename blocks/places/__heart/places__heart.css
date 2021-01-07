@@ -4,4 +4,6 @@
   align-self: flex-end;
   background-image: url("../../../images/heart.svg");
   background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
