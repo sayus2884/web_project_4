@@ -6,3 +6,10 @@
 
   padding: 34px 36px 0;
 }
+
+
+@media screen and (max-width: 600px) {
+  .edit__content {
+    width: 282px;
+  }
+}

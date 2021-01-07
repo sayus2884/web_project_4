@@ -24,3 +24,10 @@
 .edit__close-button:active {
   opacity: 0.6;
 }
+
+@media screen and (max-width: 600px) {
+  .edit__close-button {
+    right: 0px;
+    top: -44px;
+  }
+}

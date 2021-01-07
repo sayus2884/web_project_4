@@ -4,3 +4,18 @@
   grid-gap: 20px 17px;
   font-size: 0;
 }
+
+@media screen and (max-width: 920px) {
+  .places__grid {
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .places__grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

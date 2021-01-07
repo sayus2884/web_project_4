@@ -1,6 +1,15 @@
 .profile__name-container {
   display: flex;
-  margin-top: 22px;
-  margin-bottom: 16px;
+  margin: 22px 0 16px;
   max-width: 530px;
+}
+
+@media screen and (max-width: 720px) {
+  .profile__name-container {
+    position: relative;
+    padding: 0;
+    margin: 26.25px 0 14px;
+    max-width: inherit;
+    justify-content: center;
+  }
 }

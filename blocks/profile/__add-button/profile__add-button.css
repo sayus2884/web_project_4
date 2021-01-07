@@ -30,3 +30,11 @@
 .profile__add-button:active {
   opacity: 0.6;
 }
+
+@media screen and (max-width: 720px) {
+  .profile__add-button {
+    position: inherit;
+    transform: none;
+    max-width: inherit;
+  }
+}
