@@ -1,0 +1,8 @@
+.edit__content {
+  width: 430px;
+  height: 330px;
+  border-radius: 10px;
+  background-color: white;
+
+  padding: 34px 36px 0;
+}
