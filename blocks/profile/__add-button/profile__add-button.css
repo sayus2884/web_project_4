@@ -1,9 +1,32 @@
 .profile__add-button {
   position: absolute;
-  right: 0;
-  top: 50%;
   transform: translateY(-50%);
   height: 50px;
-  width: 100%;
   max-width: 150px;
+  width: 100%;
+  right: 0;
+  top: 50%;
+
+  background-image: url("../../../images/add-icon.svg");
+  background-color: rgba(0,0,0,0);
+  background-size: contain;
+  background-size: 22px;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  border-color: white;
+  border-style: solid;
+  border-width: 2px;
+}
+
+.profile__add-button:hover {
+  cursor: pointer;
+}
+
+.profile__add-button:focus {
+  outline: none;
+}
+
+.profile__add-button:active {
+  opacity: 0.6;
 }
