@@ -31,7 +31,7 @@ function setProfile(){
 function init(){
 
   let editButton = profile.querySelector(".profile__edit-button");
-  let closeButton = edit.querySelector(".edit__close");
+  let closeButton = edit.querySelector(".edit__close-button");
   let saveButton = edit.querySelector(".edit__save-button");
 
   editButton.addEventListener("click", openEditModal);

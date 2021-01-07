@@ -1,4 +1,4 @@
-.edit__close {
+.edit__close-button {
   padding: 0;
   position: absolute;
   height: 40px;
@@ -13,14 +13,14 @@
   border: none;
 }
 
-.edit__close:hover {
+.edit__close-button:hover {
   cursor: pointer;
 }
 
-.edit__close:focus {
+.edit__close-button:focus {
   outline: none;
 }
 
-.edit__close:active {
+.edit__close-button:active {
   opacity: 0.6;
 }
