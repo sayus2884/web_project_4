@@ -1,0 +1,11 @@
+.edit__button {
+  margin: 0;
+  padding: 0;
+  height: 50.15px;
+  background-color: black;
+  border: none;
+
+  color: white;
+  font-size: 18px;
+  line-height: 21.78px;
+}

@@ -1,3 +1,12 @@
+@import url("./__button/edit__button.css");
+@import url("./__close/edit__close.css");
+@import url("./__container/edit__container.css");
+@import url("./__content/edit__content.css");
+@import url("./__form/edit__form.css");
+@import url("./__input-container/edit__input-container.css");
+@import url("./__item/edit__item.css");
+@import url("./__title/edit__title.css");
+
 .edit {
   position: fixed;
   height: 100%;
@@ -12,54 +21,4 @@
   align-items: center;
 
   display: none;
-}
-
-.edit__item {
-  margin: 0;
-  padding: 0 0 13.26px;
-  margin-bottom: 30px;
-  border: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, .2);
-
-  font-size: 14px;
-  line-height: 16.94px;
-}
-
-.edit__item:focus {
-  outline: none;
-}
-
-.edit__item:nth-child(2) {
-  margin-bottom: 48px;
-}
-
-.edit__button {
-  margin: 0;
-  padding: 0;
-  height: 50.15px;
-  background-color: black;
-  border: none;
-
-  color: white;
-  font-size: 18px;
-  line-height: 21.78px;
-}
-
-.edit__close {
-  padding: 0;
-  position: absolute;
-  height: 40px;
-  width: 40px;
-  top: -30px;
-  right: -30px;
-
-  background-image: url("../../../images/close-icon.svg");
-  background-color: rgba(0,0,0,0);
-  background-size: contain;
-
-  border: none;
-}
-
-.edit__close:focus {
-  outline: none;
 }
