@@ -12,12 +12,9 @@
 
 .edit__save-button:hover {
   cursor: pointer;
+  opacity: 0.6;
 }
 
 .edit__save-button:focus {
   outline: none;
-}
-
-.edit__save-button:active {
-  opacity: 0.6;
 }

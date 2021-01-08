@@ -15,14 +15,11 @@
 
 .edit__close-button:hover {
   cursor: pointer;
+  opacity: 0.6;
 }
 
 .edit__close-button:focus {
   outline: none;
-}
-
-.edit__close-button:active {
-  opacity: 0.6;
 }
 
 @media screen and (max-width: 600px) {

@@ -7,3 +7,8 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
+.places__heart:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}

@@ -21,14 +21,11 @@
 
 .profile__add-button:hover {
   cursor: pointer;
+  opacity: 0.6;
 }
 
 .profile__add-button:focus {
   outline: none;
-}
-
-.profile__add-button:active {
-  opacity: 0.6;
 }
 
 @media screen and (max-width: 720px) {
