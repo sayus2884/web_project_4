@@ -1,6 +1,8 @@
 @import url("./__card/places__card.css");
 @import url("./__grid/places__grid.css");
 @import url("./__heart/places__heart.css");
+@import url("./__heart/_active/places__heart_active.css");
+@import url("./__heart/_disabled/places__heart_disabled.css");
 @import url("./__image/places__image.css");
 @import url("./__title/places__title.css");
 @import url("./__title-container/places__title-container.css");
