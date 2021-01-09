@@ -11,7 +11,7 @@ let nameInput = edit.querySelector(".edit__item_type_name");
 let jobInput = edit.querySelector(".edit__item_type_job");
 
 let person = {
-  name: "Kheren Chandler",
+  name: 'Philliney Chandler',
   job: "Space Mobile Task Force Cadet"
 };
 
