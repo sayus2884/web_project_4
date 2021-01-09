@@ -1,3 +1,4 @@
+let body = document.querySelector("body");
 let page = document.querySelector(".page");
 
 let profile = page.querySelector(".profile");
@@ -17,10 +18,12 @@ let person = {
 
 function openEditModal(){
   edit.classList.remove("edit_hidden");
+  body.style.overflow = "hidden";
 }
 
 function closeEditModal(){
   edit.classList.add("edit_hidden");
+  body.style.overflow = "auto";
 }
 
 function setProfile(){
