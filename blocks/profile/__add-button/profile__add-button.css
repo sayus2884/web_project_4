@@ -28,7 +28,7 @@
   outline: none;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 850px) {
   .profile__add-button {
     position: inherit;
     transform: none;

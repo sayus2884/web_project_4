@@ -4,7 +4,7 @@
   max-width: 530px;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 850px) {
   .profile__name-container {
     position: relative;
     padding: 0;

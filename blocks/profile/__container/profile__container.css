@@ -4,7 +4,7 @@
   flex-direction: row;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 850px) {
   .profile__container {
     max-width: 282px;
     width: 100%;
