@@ -1,7 +1,8 @@
 .places__card {
   margin: 0;
-  height: 361px;
   max-width: 282px;
+  height: 361px;
+  width: 100%;
   background-color: white;
   border-radius: 10px;
   color: black;
