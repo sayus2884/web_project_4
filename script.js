@@ -8,11 +8,6 @@ let editContainer = document.querySelector(".modal");
 let nameInput = editContainer.querySelector(".modal__item_type_name");
 let jobInput = editContainer.querySelector(".modal__item_type_job");
 
-let person = {
-  name: 'Philliney Chandler',
-  job: "Space Mobile Task Force Cadet"
-};
-
 function openEditModal(){
   nameInput.value = nameProfile.textContent;
   jobInput.value = jobProfile.textContent;
@@ -24,12 +19,14 @@ function closeEditModal(){
   editContainer.classList.add("modal_hidden");
 }
 
-function setProfile(event){
+function setProfile(data){
+  nameProfile.textContent = data.name;
+  jobProfile.textContent = data.job;
+}
+
+function handleSave(event){
   event.preventDefault();
-
-  nameProfile.textContent = nameInput.value;
-  jobProfile.textContent = jobInput.value;
-
+  setProfile({ name: nameInput.value, job: jobInput.value })
   closeEditModal();
 }
 
@@ -48,6 +45,11 @@ function toggleHeart(heartDOM){
 
 function init(){
 
+  let person = {
+    name: 'Philliney Chandler',
+    job: "Space Mobile Task Force Cadet"
+  };
+
   let editButton = profileContainer.querySelector(".profile__edit-button");
   let closeButton = editContainer.querySelector(".modal__close-button");
   let editForm = editContainer.querySelector(".modal__form");
@@ -61,10 +63,9 @@ function init(){
 
   editButton.addEventListener("click", openEditModal);
   closeButton.addEventListener("click", closeEditModal);
-  editForm.addEventListener("submit", setProfile);
+  editForm.addEventListener("submit", handleSave);
 
-  nameProfile.textContent = person.name;
-  jobProfile.textContent = person.job;
+  setProfile(person);
 }
 
 init();

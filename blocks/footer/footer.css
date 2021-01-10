@@ -5,9 +5,3 @@
   width: 100%;
   max-width: 880px;
 }
-
-@media screen and (max-width: 900px) {
-  .footer__author {
-    padding-left: 19px;
-  }
-}
