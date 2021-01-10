@@ -1,4 +1,4 @@
-.edit__save-button {
+.modal__save-button {
   margin: 0;
   padding: 0;
   height: 50.15px;
@@ -10,11 +10,11 @@
   line-height: 21.78px;
 }
 
-.edit__save-button:hover {
+.modal__save-button:hover {
   cursor: pointer;
   opacity: 0.6;
 }
 
-.edit__save-button:focus {
+.modal__save-button:focus {
   outline: none;
 }

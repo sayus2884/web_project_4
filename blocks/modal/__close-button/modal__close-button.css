@@ -1,4 +1,4 @@
-.edit__close-button {
+.modal__close-button {
   padding: 0;
   position: absolute;
   height: 40px;
@@ -13,17 +13,17 @@
   border: none;
 }
 
-.edit__close-button:hover {
+.modal__close-button:hover {
   cursor: pointer;
   opacity: 0.6;
 }
 
-.edit__close-button:focus {
+.modal__close-button:focus {
   outline: none;
 }
 
 @media screen and (max-width: 600px) {
-  .edit__close-button {
+  .modal__close-button {
     right: 0px;
     top: -44px;
   }

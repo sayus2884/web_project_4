@@ -1,4 +1,4 @@
-.edit__content {
+.modal__content {
   width: 430px;
   height: 330px;
   border-radius: 10px;
@@ -9,7 +9,7 @@
 
 
 @media screen and (max-width: 600px) {
-  .edit__content {
+  .modal__content {
     width: 282px;
   }
 }

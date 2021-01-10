@@ -1,4 +1,4 @@
-.edit__item {
+.modal__item {
   margin: 0;
   padding: 0 0 13.26px;
   margin-bottom: 30px;
@@ -9,10 +9,10 @@
   line-height: 16.94px;
 }
 
-.edit__item:focus {
+.modal__item:focus {
   outline: none;
 }
 
-.edit__item:nth-child(2) {
+.modal__item:nth-child(2) {
   margin-bottom: 48px;
 }

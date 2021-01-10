@@ -1,7 +1,7 @@
 @import url("../vendor/normalize.css");
 @import url("../vendor/inter/inter.css");
 @import url("../blocks/content/content.css");
-@import url("../blocks/edit/edit.css");
+@import url("../blocks/modal/modal.css");
 @import url("../blocks/footer/footer.css");
 @import url("../blocks/header/header.css");
 @import url("../blocks/page/page.css");
