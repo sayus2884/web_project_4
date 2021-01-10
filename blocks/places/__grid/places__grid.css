@@ -1,8 +1,10 @@
 .places__grid {
+  padding: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px 17px;
   font-size: 0;
+  list-style: none;
 }
 
 @media screen and (max-width: 920px) {
