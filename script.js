@@ -13,6 +13,8 @@ let addModal = document.querySelector("#modal__add");
 let titleInput = addModal.querySelector(".modal__item_type_title");
 let urlInput = addModal.querySelector(".modal__item_type_url");
 
+let imagePopupContainer = document.querySelector(".image-popup");
+
 const initialCards = [
   {
     title: "Yosemite Valley",
@@ -45,6 +47,15 @@ function setProfile(data){
   jobProfile.textContent = data.job;
 }
 
+function setPopupImage(src, title) {
+  console.log(src);
+  let imageElement = imagePopupContainer.querySelector(".image-popup__image");
+  let titleElement = imagePopupContainer.querySelector(".image-popup__title");
+
+  imageElement.src = src;
+  titleElement.textContent = title;
+}
+
 function createCard({ title, url }){
 
   const cardTemplate = document.querySelector("#place_card").content;
@@ -60,6 +71,10 @@ function createCard({ title, url }){
 
   heartButton.addEventListener("click", toggleHeart(heartButton));
   deleteButton.addEventListener("click", deleteCard(deleteButton.id));
+  imageElement.addEventListener("click", () => {
+    setPopupImage(url, title);
+    openImagePopup(imagePopupContainer);
+  });
 
   gridElement.append(cardElement);
 }
@@ -96,6 +111,14 @@ function closeModal(modal){
   modal.classList.add("modal_hidden");
 }
 
+function openImagePopup(popup){
+  popup.classList.remove("image-popup_hidden");
+}
+
+function closeImagePopup(popup){
+  popup.classList.add("image-popup_hidden");
+}
+
 function handleEditSubmit(event){
   event.preventDefault();
   setProfile({ name: nameInput.value, job: jobInput.value })
@@ -125,6 +148,8 @@ function init(){
   let closeAddButton = addModal.querySelector(".modal__close-button");
   let addForm = addModal.querySelector(".modal__form");
 
+  let closeImagePopupButton = imagePopupContainer.querySelector(".image-popup__close-button");
+
   for (var i = 0; i < initialCards.length; i++) {
     createCard(initialCards[i]);
   }
@@ -141,6 +166,8 @@ function init(){
 
   editForm.addEventListener("submit", handleEditSubmit);
   addForm.addEventListener("submit", handleAddSubmit);
+
+  closeImagePopupButton.addEventListener("click", () => closeImagePopup(imagePopupContainer));
 
   setProfile(person);
 }

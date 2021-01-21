@@ -1,0 +1,36 @@
+@import url("./__close-button/image-popup__close-button.css");
+@import url("./_hidden/image-popup_hidden.css");
+
+.image-popup {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  overflow: auto;
+  color: black;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-popup__container {
+  position: relative;
+}
+
+.image-popup__image {
+  max-width: 75vw;
+  max-height: 75vh;
+  object-fit: cover;
+}
+
+.image-popup__title {
+  margin: 10px 0 0;
+  color: white;
+
+  font-size: 12px;
+  line-height: 14.52px;
+}
