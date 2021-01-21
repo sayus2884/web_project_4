@@ -3,6 +3,7 @@ let nameProfile = profileContainer.querySelector(".profile__name");
 let jobProfile = profileContainer.querySelector(".profile__job");
 
 let placesContainer = document.querySelector(".places");
+const gridElement = placesContainer.querySelector(".places__grid");
 
 let editModal = document.querySelector("#modal__edit");
 let nameInput = editModal.querySelector(".modal__item_type_name");
@@ -45,20 +46,33 @@ function setProfile(data){
 }
 
 function createCard({ title, url }){
-  const gridElement = placesContainer.querySelector(".places__grid");
 
   const cardTemplate = document.querySelector("#place_card").content;
   const cardElement = cardTemplate.cloneNode(true);
   const imageElement = cardElement.querySelector(".places__image");
   const titleElement = cardElement.querySelector(".places__title");
   const heartButton = cardElement.querySelector(".places__heart");
+  const deleteButton = cardElement.querySelector(".places__delete");
 
   titleElement.textContent = title;
   imageElement.src = url;
+  deleteButton.id = Date.now();
 
   heartButton.addEventListener("click", toggleHeart(heartButton));
+  deleteButton.addEventListener("click", deleteCard(deleteButton.id));
 
   gridElement.append(cardElement);
+}
+
+function deleteCard(id){
+  return () => {
+    const cards = gridElement.querySelectorAll(".places__card");
+    const card = Array.from(cards).find((card) => {
+      return card.querySelector(".places__delete").id === id;
+    });
+
+    card.remove();
+  };
 }
 
 function toggleHeart(heartDOM){
@@ -109,9 +123,7 @@ function init(){
   let editForm = editModal.querySelector(".modal__form");
 
   let closeAddButton = addModal.querySelector(".modal__close-button");
-  let addForm = addModal.querySelector(".modal__form"); // set event listener
-
-  let hearts = placesContainer.querySelectorAll(".places__heart");
+  let addForm = addModal.querySelector(".modal__form");
 
   for (var i = 0; i < initialCards.length; i++) {
     createCard(initialCards[i]);
