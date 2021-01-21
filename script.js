@@ -4,30 +4,61 @@ let jobProfile = profileContainer.querySelector(".profile__job");
 
 let placesContainer = document.querySelector(".places");
 
-let editContainer = document.querySelector(".modal");
-let nameInput = editContainer.querySelector(".modal__item_type_name");
-let jobInput = editContainer.querySelector(".modal__item_type_job");
+let editModal = document.querySelector("#modal__edit");
+let nameInput = editModal.querySelector(".modal__item_type_name");
+let jobInput = editModal.querySelector(".modal__item_type_job");
 
-function openEditModal(){
-  nameInput.value = nameProfile.textContent;
-  jobInput.value = jobProfile.textContent;
+let addModal = document.querySelector("#modal__add");
+let titleInput = addModal.querySelector(".modal__item_type_title");
+let urlInput = addModal.querySelector(".modal__item_type_url");
 
-  editContainer.classList.remove("modal_hidden");
-}
-
-function closeEditModal(){
-  editContainer.classList.add("modal_hidden");
-}
+const initialCards = [
+  {
+    title: "Yosemite Valley",
+    link: "https://code.s3.yandex.net/web-code/yosemite.jpg"
+  },
+  {
+    title: "Alaska(?)",
+    link: "./images/mountains.jpg"
+  },
+  {
+    title: "Maybe England",
+    link: "./images/village.jpg"
+  },
+  {
+    title: "Was Atlantis",
+    link: "./images/atlantis.jpg"
+  },
+  {
+    title: "Must Be Themyskira",
+    link: "./images/island.jpg"
+  },
+  {
+    title: "Random Hills",
+    link: "./images/hills.jpg"
+  }
+];
 
 function setProfile(data){
   nameProfile.textContent = data.name;
   jobProfile.textContent = data.job;
 }
 
-function handleSave(event){
-  event.preventDefault();
-  setProfile({ name: nameInput.value, job: jobInput.value })
-  closeEditModal();
+function createCard({ title, url }){
+  const gridElement = placesContainer.querySelector(".places__grid");
+
+  const cardTemplate = document.querySelector("#place_card").content;
+  const cardElement = cardTemplate.cloneNode(true);
+  const imageElement = cardElement.querySelector(".places__image");
+  const titleElement = cardElement.querySelector(".places__title");
+  const heartButton = cardElement.querySelector(".places__heart");
+
+  titleElement.textContent = title;
+  imageElement.src = url;
+
+  heartButton.addEventListener("click", toggleHeart(heartButton));
+
+  gridElement.append(cardElement);
 }
 
 function toggleHeart(heartDOM){
@@ -43,6 +74,27 @@ function toggleHeart(heartDOM){
   }
 }
 
+function openModal(modal){
+  modal.classList.remove("modal_hidden");
+}
+
+function closeModal(modal){
+  modal.classList.add("modal_hidden");
+}
+
+function handleEditSubmit(event){
+  event.preventDefault();
+  setProfile({ name: nameInput.value, job: jobInput.value })
+  closeModal(editModal);
+}
+
+function handleAddSubmit(event){
+  event.preventDefault();
+  createCard({ title: titleInput.value, url: urlInput.value });
+  closeModal(addModal);
+}
+
+
 function init(){
 
   let person = {
@@ -51,8 +103,13 @@ function init(){
   };
 
   let editButton = profileContainer.querySelector(".profile__edit-button");
-  let closeButton = editContainer.querySelector(".modal__close-button");
-  let editForm = editContainer.querySelector(".modal__form");
+  let addButton = profileContainer.querySelector(".profile__add-button");
+
+  let closeEditButton = editModal.querySelector(".modal__close-button");
+  let editForm = editModal.querySelector(".modal__form");
+
+  let closeAddButton = addModal.querySelector(".modal__close-button");
+  let addForm = addModal.querySelector(".modal__form"); // set event listener
 
   let hearts = placesContainer.querySelectorAll(".places__heart");
 
@@ -61,9 +118,18 @@ function init(){
     hearts[i].addEventListener("click", toggleHeart(hearts[i]));
   }
 
-  editButton.addEventListener("click", openEditModal);
-  closeButton.addEventListener("click", closeEditModal);
-  editForm.addEventListener("submit", handleSave);
+  editButton.addEventListener("click", () => {
+    nameInput.value = nameProfile.textContent;
+    jobInput.value = jobProfile.textContent;
+    openModal(editModal);
+  });
+  addButton.addEventListener("click", () => openModal(addModal));
+
+  closeEditButton.addEventListener("click", () => closeModal(editModal));
+  closeAddButton.addEventListener("click", () => closeModal(addModal));
+
+  editForm.addEventListener("submit", handleEditSubmit);
+  addForm.addEventListener("submit", handleAddSubmit);
 
   setProfile(person);
 }
