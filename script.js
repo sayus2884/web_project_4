@@ -15,27 +15,27 @@ let urlInput = addModal.querySelector(".modal__item_type_url");
 const initialCards = [
   {
     title: "Yosemite Valley",
-    link: "https://code.s3.yandex.net/web-code/yosemite.jpg"
+    url: "https://code.s3.yandex.net/web-code/yosemite.jpg"
   },
   {
-    title: "Alaska(?)",
-    link: "./images/mountains.jpg"
+    title: "Lake Louise",
+    url: "https://code.s3.yandex.net/web-code/lake-louise.jpg"
   },
   {
-    title: "Maybe England",
-    link: "./images/village.jpg"
+    title: "Bald Mountains",
+    url: "https://code.s3.yandex.net/web-code/bald-mountains.jpg"
   },
   {
-    title: "Was Atlantis",
-    link: "./images/atlantis.jpg"
+    title: "Latemar",
+    url: "https://code.s3.yandex.net/web-code/latemar.jpg"
   },
   {
-    title: "Must Be Themyskira",
-    link: "./images/island.jpg"
+    title: "Vanoise National Park",
+    url: "https://code.s3.yandex.net/web-code/vanoise.jpg"
   },
   {
-    title: "Random Hills",
-    link: "./images/hills.jpg"
+    title: "Lago di Braies",
+    url: "https://code.s3.yandex.net/web-code/lago.jpg"
   }
 ];
 
@@ -113,9 +113,8 @@ function init(){
 
   let hearts = placesContainer.querySelectorAll(".places__heart");
 
-  for (var i = 0; i < hearts.length; i++) {
-    hearts[i].classList.add("places__heart_disabled");
-    hearts[i].addEventListener("click", toggleHeart(hearts[i]));
+  for (var i = 0; i < initialCards.length; i++) {
+    createCard(initialCards[i]);
   }
 
   editButton.addEventListener("click", () => {
