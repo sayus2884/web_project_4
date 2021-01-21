@@ -56,7 +56,7 @@ function createCard({ title, url }){
 
   titleElement.textContent = title;
   imageElement.src = url;
-  deleteButton.id = Date.now();
+  deleteButton.id = Date.now() + Math.floor(Math.random() * 100);
 
   heartButton.addEventListener("click", toggleHeart(heartButton));
   deleteButton.addEventListener("click", deleteCard(deleteButton.id));
