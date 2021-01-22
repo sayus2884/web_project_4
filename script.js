@@ -141,9 +141,8 @@ function init(){
 
   let closeImagePopupButton = imagePopupContainer.querySelector(".image-popup__close-button");
 
-  for (var i = 0; i < initialCards.length; i++) {
-    createCard(initialCards[i]);
-  }
+  initialCards.forEach((card) => createCard(initialCards[i]) );
+
 
   editButton.addEventListener("click", () => {
     nameInput.value = nameProfile.textContent;
