@@ -141,7 +141,7 @@ function init(){
 
   let closeImagePopupButton = imagePopupContainer.querySelector(".image-popup__close-button");
 
-  initialCards.forEach((card) => createCard(initialCards[i]) );
+  initialCards.forEach((card) => createCard(card));
 
 
   editButton.addEventListener("click", () => {
