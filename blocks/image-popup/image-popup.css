@@ -18,4 +18,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  transition: visibility 0.3s, opacity 0.3s linear;
 }

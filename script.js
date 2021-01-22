@@ -48,7 +48,6 @@ function setProfile(data){
 }
 
 function setPopupImage(src, title) {
-  console.log(src);
   let imageElement = imagePopupContainer.querySelector(".image-popup__image");
   let titleElement = imagePopupContainer.querySelector(".image-popup__title");
 
@@ -73,7 +72,7 @@ function createCard({ title, url }){
   deleteButton.addEventListener("click", deleteCard(deleteButton.id));
   imageElement.addEventListener("click", () => {
     setPopupImage(url, title);
-    openImagePopup(imagePopupContainer);
+    toggleImagePopup(imagePopupContainer);
   });
 
   gridElement.append(cardElement);
@@ -103,32 +102,24 @@ function toggleHeart(heartDOM){
   }
 }
 
-function openModal(modal){
-  modal.classList.remove("modal_hidden");
+function toggleModal(modal){
+  modal.classList.toggle("modal_hidden");
 }
 
-function closeModal(modal){
-  modal.classList.add("modal_hidden");
-}
-
-function openImagePopup(popup){
-  popup.classList.remove("image-popup_hidden");
-}
-
-function closeImagePopup(popup){
-  popup.classList.add("image-popup_hidden");
+function toggleImagePopup(popup){
+  popup.classList.toggle("image-popup_hidden");
 }
 
 function handleEditSubmit(event){
   event.preventDefault();
   setProfile({ name: nameInput.value, job: jobInput.value })
-  closeModal(editModal);
+  toggleModal(editModal);
 }
 
 function handleAddSubmit(event){
   event.preventDefault();
   createCard({ title: titleInput.value, url: urlInput.value });
-  closeModal(addModal);
+  toggleModal(addModal);
 }
 
 
@@ -157,17 +148,18 @@ function init(){
   editButton.addEventListener("click", () => {
     nameInput.value = nameProfile.textContent;
     jobInput.value = jobProfile.textContent;
-    openModal(editModal);
+    toggleModal(editModal);
   });
-  addButton.addEventListener("click", () => openModal(addModal));
 
-  closeEditButton.addEventListener("click", () => closeModal(editModal));
-  closeAddButton.addEventListener("click", () => closeModal(addModal));
+  addButton.addEventListener("click", () => toggleModal(addModal));
+
+  closeEditButton.addEventListener("click", () => toggleModal(editModal));
+  closeAddButton.addEventListener("click", () => toggleModal(addModal));
 
   editForm.addEventListener("submit", handleEditSubmit);
   addForm.addEventListener("submit", handleAddSubmit);
 
-  closeImagePopupButton.addEventListener("click", () => closeImagePopup(imagePopupContainer));
+  closeImagePopupButton.addEventListener("click", () => toggleImagePopup(imagePopupContainer));
 
   setProfile(person);
 }
