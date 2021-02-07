@@ -108,7 +108,14 @@ function setInputEventListener(formElement) {
   });
 }
 
-function enableValidation() {
+function enableValidation(selectors = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  inactiveButtonClass: "popup__button_disabled",
+  inputErrorClass: "popup__input_type_error",
+  errorClass: "popup__error_visible"
+}) {
   const formList = Array.from(document.querySelectorAll(".form"));
   formList.forEach((formElement) => {
     formElement.addEventListener("submit", (event) => {
@@ -152,6 +159,9 @@ function init(){
   const addForm = addModal.querySelector(".modal__form");
 
   const closeImagePopupButton = imagePopupContainer.querySelector(".image-popup__close-button");
+  const popupOverlay = imagePopupContainer.querySelector(".image-popup__overlay");
+
+  const modalList = document.querySelectorAll(".modal");
 
   initialCards.forEach((card) => {
     gridElement.append( createCard(card) );
@@ -173,9 +183,17 @@ function init(){
   closeEditButton.addEventListener("click", () => openPopup(editModal));
   closeAddButton.addEventListener("click", () => openPopup(addModal));
 
+  modalList.forEach((modalElement) => {
+    const overlayElement = modalElement.querySelector(".modal__overlay");
+    overlayElement.addEventListener("click", () => openPopup(modalElement))
+  });
+
   editForm.addEventListener("submit", handleEditSubmit);
   addForm.addEventListener("submit", handleAddSubmit);
 
+  popupOverlay.addEventListener("click", () => {
+    openPopup(imagePopupContainer, "image-popup_hidden");
+  });
   closeImagePopupButton.addEventListener("click", () => openPopup(imagePopupContainer, "image-popup_hidden"));
 
   setProfile(person);

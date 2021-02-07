@@ -8,9 +8,6 @@
   position: fixed;
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  top: 0;
-  left: 0;
   overflow: auto;
   color: black;
 
@@ -20,4 +17,18 @@
   align-items: center;
 
   transition: visibility 0.3s, opacity 0.3s linear;
+}
+
+.image-popup__overlay {
+  position: absolute;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+}
+
+.image-popup__overlay:hover {
+  cursor: pointer;
 }
