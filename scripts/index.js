@@ -17,14 +17,6 @@ const imagePopupContainer = document.querySelector(".image-popup");
 const imageElement = imagePopupContainer.querySelector(".image-popup__image");
 const titleElement = imagePopupContainer.querySelector(".image-popup__title");
 
-const selectors = {
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit-button",
-  inactiveButtonClass: "form__submit-button_inactive",
-  inputErrorClass: "form__input-error_active",
-  activeInputErrorClass: "form__item_error_active"
-}
-
 function setProfile(data){
   nameProfile.textContent = data.name;
   jobProfile.textContent = data.job;
@@ -66,13 +58,17 @@ function toggleHeart(event){
 }
 
 function openPopup(popup, hiddenClassName="modal_hidden"){
-  popup.classList.toggle(hiddenClassName);
+  popup.classList.remove(hiddenClassName);
+}
+
+function closePopup(popup, hiddenClassName="modal_hidden"){
+  popup.classList.add(hiddenClassName);
 }
 
 function handleEditSubmit(event){
   event.preventDefault();
   setProfile({ name: nameInput.value, job: jobInput.value })
-  openPopup(editModal);
+  closePopup(editModal);
 }
 
 function handleAddSubmit(event){
@@ -81,7 +77,27 @@ function handleAddSubmit(event){
 
   gridElement.prepend(card);
 
-  openPopup(addModal);
+  closePopup(addModal);
+}
+
+function hasClass(element, classname){
+  return Array.from(element.classList).includes(classname.replace(".", ""));
+}
+
+function closeAndResetModalForm(formElement, modalElement) {
+  closePopup(modalElement);
+  formElement.reset();
+}
+
+function setEscKeydownEvent(formElement, modalElement, hiddenClass){
+  document.addEventListener("keydown", (event) => {
+    if (event.keyCode == 27 && !hasClass(modalElement, hiddenClass)) {
+
+      formElement ?
+      closeAndResetModalForm(formElement, modalElement) :
+      closePopup(modalElement, hiddenClass);
+    }
+  });
 }
 
 function init(){
@@ -90,6 +106,14 @@ function init(){
     name: 'Philliney Chandler',
     job: "Space Mobile Task Force Cadet"
   };
+
+  const selectors = {
+    inputSelector: ".form__input",
+    submitButtonSelector: ".form__submit-button",
+    inactiveButtonClass: "form__submit-button_inactive",
+    inputErrorClass: "form__input-error_active",
+    activeInputErrorClass: "form__item_error_active"
+  }
 
   const editButton = profileContainer.querySelector(".profile__edit-button");
   const addButton = profileContainer.querySelector(".profile__add-button");
@@ -105,7 +129,6 @@ function init(){
   initialCards.forEach((card) => {
     gridElement.append( createCard(card) );
   });
-
 
   editButton.addEventListener("click", () => {
     nameInput.value = nameProfile.textContent;
@@ -123,22 +146,21 @@ function init(){
     const overlayElement = modalElement.querySelector(".modal__overlay");
     const closeButton = modalElement.querySelector(".modal__close-button");
     const formElement = modalElement.querySelector(".modal__form");
-    const closeAndReset = () => {
-      openPopup(modalElement);
-      formElement.reset();
-    }
 
-    overlayElement.addEventListener("click", () => closeAndReset());
-    closeButton.addEventListener("click", () => closeAndReset());
+    setEscKeydownEvent(formElement, modalElement, ".modal__hidden");
+    overlayElement.addEventListener("click", () => closeAndResetModalForm(formElement, modalElement));
+    closeButton.addEventListener("click", () => closeAndResetModalForm(formElement, modalElement));
   });
 
   editForm.addEventListener("submit", handleEditSubmit);
   addForm.addEventListener("submit", handleAddSubmit);
 
   popupOverlay.addEventListener("click", () => {
-    openPopup(imagePopupContainer, "image-popup_hidden");
+    closePopup(imagePopupContainer, "image-popup_hidden");
   });
-  closeImagePopupButton.addEventListener("click", () => openPopup(imagePopupContainer, "image-popup_hidden"));
+  closeImagePopupButton.addEventListener("click", () => closePopup(imagePopupContainer, "image-popup_hidden"));
+
+  setEscKeydownEvent(null, imagePopupContainer, "image-popup_hidden")
 
   setProfile(person);
 }
