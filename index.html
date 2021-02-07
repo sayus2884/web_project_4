@@ -46,11 +46,23 @@
 
         <div class="modal__content">
           <h2 class="modal__title">Edit profile</h2>
-          <form class="modal__form">
+          <form class="modal__form form">
 
-            <input class="modal__item modal__item_type_name" type="text" name="name" placeholder="Full Name" required>
-            <input class="modal__item modal__item_type_job" type="text" name="job" placeholder="Occupation" required>
-            <button class="modal__save-button" type="submit">Save</button>
+            <label class="form__field">
+              <input class="form__input form__item modal__item_type_name"
+                id="name-input" type="text" name="name" placeholder="Full Name"
+                minlength="2" maxlength="40" required>
+              <span class="form__input-error name-input-error"></span>
+            </label>
+
+            <label class="form__field">
+              <input class="form__input form__item modal__item_type_job" id="job-input"
+                type="text" name="job" placeholder="Occupation"
+                minlength="2" maxlength="200" required>
+              <span class="form__input-error job-input-error"></span>
+            </label>
+
+            <button class="form__submit-button" type="submit">Save</button>
 
           </form>
           <button class="modal__close-button" type="button" aria-label="close" title="close"></button>
@@ -62,12 +74,20 @@
 
           <div class="modal__content">
             <h2 class="modal__title">New Place</h2>
-            <form class="modal__form">
+            <form class="modal__form form">
 
-              <input class="modal__item modal__item_type_title" type="text" name="title" placeholder="Title" required>
-              <input class="modal__item modal__item_type_url" type="url" name="url" placeholder="Image URL" required>
-              <button class="modal__save-button" type="submit">Create</button>
+              <label class="form__field">
+                <input class="form__input form__item modal__item_type_title"
+                  id="title-input" type="text" name="title" placeholder="Title"
+                  minlength="1" maxlength="30" required>
+                <span class="form__input-error title-input-error"></span>
+              </label>
 
+              <label class="form__field">
+                <input class="form__input form__item modal__item_type_url" id="url-input" type="url" name="url" placeholder="Image URL" required>
+                <span class="form__input-error url-input-error"></span>
+              </label>
+              <button class="form__submit-button" type="submit">Create</button>
             </form>
             <button class="modal__close-button" type="button" aria-label="close" title="close"></button>
           </div>
