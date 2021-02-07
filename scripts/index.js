@@ -88,10 +88,7 @@ function init(){
   const editButton = profileContainer.querySelector(".profile__edit-button");
   const addButton = profileContainer.querySelector(".profile__add-button");
 
-  const closeEditButton = editModal.querySelector(".modal__close-button");
   const editForm = editModal.querySelector(".modal__form");
-
-  const closeAddButton = addModal.querySelector(".modal__close-button");
   const addForm = addModal.querySelector(".modal__form");
 
   const closeImagePopupButton = imagePopupContainer.querySelector(".image-popup__close-button");
@@ -116,12 +113,16 @@ function init(){
     enableValidation();
   });
 
-  closeEditButton.addEventListener("click", () => openPopup(editModal));
-  closeAddButton.addEventListener("click", () => openPopup(addModal));
-
   modalList.forEach((modalElement) => {
     const overlayElement = modalElement.querySelector(".modal__overlay");
+    const closeButton = modalElement.querySelector(".modal__close-button");
+    const formElement = modalElement.querySelector(".modal__form");
+
     overlayElement.addEventListener("click", () => openPopup(modalElement))
+    closeButton.addEventListener("click", () => {
+      openPopup(modalElement);
+      formElement.reset();
+    })
   });
 
   editForm.addEventListener("submit", handleEditSubmit);
