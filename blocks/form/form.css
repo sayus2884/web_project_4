@@ -1,70 +1,11 @@
+@import url("./__field/form__field.css");
+@import url("./__input-error/form__input-error.css");
+@import url("./__input-error/_active/form__input-error_active.css");
+@import url("./__item/form__item.css");
+@import url("./__item/_error/form__item_error_active.css");
+@import url("./__submit-button/form__submit-button.css");
+@import url("./__submit-button/_inactive/form__submit-button_inactive.css");
+
 .form {
 
-}
-
-.form__field {
-  margin-bottom: 13px;
-}
-
-.form__field:last-of-type {
-  margin-bottom: 31px;
-}
-
-.form__item {
-  margin: 0 0 5px;
-  padding: 0 0 13.26px;
-  border: 0;
-  border-bottom: 1px solid rgba(0, 0, 0, .2);
-  width: 100%;
-
-  font-size: 14px;
-  line-height: 16.94px;
-}
-
-.form__input_error_active {
-  border-bottom: 1px solid red;
-}
-
-.form__item:focus {
-  outline: none;
-}
-
-.form__input-error {
-  color: red;
-  opacity: 0;
-
-  font-size: 12px;
-}
-
-.form__input-error_active {
-  opacity: 1;
-}
-
-.form__submit-button {
-  margin: 0;
-  padding: 0;
-  height: 50.15px;
-  background-color: black;
-  border: none;
-
-  color: white;
-  font-size: 18px;
-  line-height: 21.78px;
-}
-
-.form__submit-button:hover {
-  cursor: pointer;
-  opacity: 0.6;
-}
-
-.form__submit-button:focus {
-  outline: none;
-}
-
-.form__submit-button_inactive {
-  background-color: white;
-  opacity: 1;
-  border: 1px solid rgba(0,0,0,0.2);
-  color: rgba(0,0,0,0.2);
-  pointer-events: none;
 }

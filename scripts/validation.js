@@ -2,13 +2,13 @@ function showError(formElement, inputElement, errorMessage) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   errorElement.classList.add("form__input-error_active");
   errorElement.textContent = errorMessage;
-  inputElement.classList.add("form__input_error_active");
+  inputElement.classList.add("form__item_error_active");
 }
 
 function hideError(formElement, inputElement) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   errorElement.classList.remove("form__input-error_active");
-  inputElement.classList.remove("form__input_error_active");
+  inputElement.classList.remove("form__item_error_active");
 }
 
 function checkInputValidity(formElement, inputElement) {
