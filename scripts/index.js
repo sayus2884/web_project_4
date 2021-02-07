@@ -6,18 +6,24 @@ const placesContainer = document.querySelector(".places");
 const gridElement = placesContainer.querySelector(".places__grid");
 
 const editModal = document.querySelector("#modal__edit");
-const nameInput = editModal.querySelector(".modal__item_type_name");
-const jobInput = editModal.querySelector(".modal__item_type_job");
+const nameInput = editModal.querySelector(".form__item_type_name");
+const jobInput = editModal.querySelector(".form__item_type_job");
 
 const addModal = document.querySelector("#modal__add");
-const titleInput = addModal.querySelector(".modal__item_type_title");
-const urlInput = addModal.querySelector(".modal__item_type_url");
+const titleInput = addModal.querySelector(".form__item_type_title");
+const urlInput = addModal.querySelector(".form__item_type_url");
 
 const imagePopupContainer = document.querySelector(".image-popup");
 const imageElement = imagePopupContainer.querySelector(".image-popup__image");
 const titleElement = imagePopupContainer.querySelector(".image-popup__title");
 
-const forms = document.querySelectorAll(".modal__form")
+const selectors = {
+  inputSelector: ".form__input",
+  submitButtonSelector: ".form__submit-button",
+  inactiveButtonClass: "form__submit-button_inactive",
+  inputErrorClass: "form__input-error_active",
+  activeInputErrorClass: "form__item_error_active"
+}
 
 function setProfile(data){
   nameProfile.textContent = data.name;
@@ -105,24 +111,25 @@ function init(){
     nameInput.value = nameProfile.textContent;
     jobInput.value = jobProfile.textContent;
     openPopup(editModal);
-    enableValidation();
+    enableValidation(selectors);
   });
 
   addButton.addEventListener("click", () => {
     openPopup(addModal)
-    enableValidation();
+    enableValidation(selectors);
   });
 
   modalList.forEach((modalElement) => {
     const overlayElement = modalElement.querySelector(".modal__overlay");
     const closeButton = modalElement.querySelector(".modal__close-button");
     const formElement = modalElement.querySelector(".modal__form");
-
-    overlayElement.addEventListener("click", () => openPopup(modalElement))
-    closeButton.addEventListener("click", () => {
+    const closeAndReset = () => {
       openPopup(modalElement);
       formElement.reset();
-    })
+    }
+
+    overlayElement.addEventListener("click", () => closeAndReset());
+    closeButton.addEventListener("click", () => closeAndReset());
   });
 
   editForm.addEventListener("submit", handleEditSubmit);

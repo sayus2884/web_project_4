@@ -43,15 +43,7 @@ function setInputEventListener(formElement, classes) {
   });
 }
 
-function enableValidation(classes = {
-  formSelector: ".popup__form",
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit-button",
-  inactiveButtonClass: "form__submit-button_inactive",
-  inputErrorClass: "form__input-error_active",
-  activeInputErrorClass: "form__item_error_active",
-  errorClass: "popup__error_visible"
-}) {
+function enableValidation(classes) {
   const formList = Array.from(document.querySelectorAll(".form"));
   formList.forEach((formElement) => {
     formElement.addEventListener("submit", (event) => {
