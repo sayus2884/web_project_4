@@ -44,6 +44,7 @@ function createCard({ title, url }){
   imageElement.addEventListener("click", () => {
     setPopupImage(url, title);
     openPopup(imagePopupContainer, "image-popup_hidden");
+    document.addEventListener("keydown", handleEscPress(null, imagePopupContainer, "image-popup_hidden"));
   });
 
   return cardElement;
@@ -84,25 +85,26 @@ function hasClass(element, classname){
   return Array.from(element.classList).includes(classname.replace(".", ""));
 }
 
-function closeAndResetModalForm(formElement, modalElement) {
+function closeAndResetModalForm(formElement, modalElement, hiddenClass) {
   closePopup(modalElement);
+  document.removeEventListener("keydown", handleEscPress(formElement, modalElement,hiddenClass))
   formElement.reset();
 }
 
-function setEscKeydownEvent(formElement, modalElement, hiddenClass){
-  document.addEventListener("keydown", (event) => {
-    if (event.keyCode == 27 && !hasClass(modalElement, hiddenClass)) {
+function handleEscPress(formElement, modalElement, hiddenClass){
+  return (event) => {
+    if (event.keyCode === 27 && !hasClass(modalElement, hiddenClass)) {
 
       formElement ?
-      closeAndResetModalForm(formElement, modalElement) :
+      closeAndResetModalForm(formElement, modalElement, hiddenClass) :
       closePopup(modalElement, hiddenClass);
     }
-  });
+  }
 }
 
 function init(){
 
-  let person = {
+  const person = {
     name: 'Philliney Chandler',
     job: "Space Mobile Task Force Cadet"
   };
@@ -133,11 +135,14 @@ function init(){
   editButton.addEventListener("click", () => {
     nameInput.value = nameProfile.textContent;
     jobInput.value = jobProfile.textContent;
+
+    document.addEventListener("keydown", handleEscPress(editForm, editModal, ".modal__hidden"));
     openPopup(editModal);
     enableValidation(selectors);
   });
 
   addButton.addEventListener("click", () => {
+    document.addEventListener("keydown", handleEscPress(addForm, addModal, ".modal__hidden"));
     openPopup(addModal)
     enableValidation(selectors);
   });
@@ -147,7 +152,6 @@ function init(){
     const closeButton = modalElement.querySelector(".modal__close-button");
     const formElement = modalElement.querySelector(".modal__form");
 
-    setEscKeydownEvent(formElement, modalElement, ".modal__hidden");
     overlayElement.addEventListener("click", () => closeAndResetModalForm(formElement, modalElement));
     closeButton.addEventListener("click", () => closeAndResetModalForm(formElement, modalElement));
   });
@@ -159,8 +163,6 @@ function init(){
     closePopup(imagePopupContainer, "image-popup_hidden");
   });
   closeImagePopupButton.addEventListener("click", () => closePopup(imagePopupContainer, "image-popup_hidden"));
-
-  setEscKeydownEvent(null, imagePopupContainer, "image-popup_hidden")
 
   setProfile(person);
 }
