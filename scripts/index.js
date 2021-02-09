@@ -44,7 +44,6 @@ function createCard({ title, url }){
   imageElement.addEventListener("click", () => {
     setPopupImage(url, title);
     openPopup(imagePopupContainer, "image-popup_hidden");
-    document.addEventListener("keydown", handleEscPress(null, imagePopupContainer, "image-popup_hidden"));
   });
 
   return cardElement;
@@ -60,10 +59,14 @@ function toggleHeart(event){
 
 function openPopup(popup, hiddenClassName="modal_hidden"){
   popup.classList.remove(hiddenClassName);
+  const formElement = popup.querySelector(".form");
+  document.addEventListener("keydown", handleEscPress(formElement, popup, hiddenClassName));
 }
 
 function closePopup(popup, hiddenClassName="modal_hidden"){
   popup.classList.add(hiddenClassName);
+  const formElement = popup.querySelector(".form");
+  document.removeEventListener("keydown", handleEscPress(formElement, popup, hiddenClassName));
 }
 
 function handleEditSubmit(event){
@@ -87,7 +90,6 @@ function hasClass(element, classname){
 
 function closeAndResetModalForm(formElement, modalElement, hiddenClass) {
   closePopup(modalElement);
-  document.removeEventListener("keydown", handleEscPress(formElement, modalElement,hiddenClass))
   formElement.reset();
 }
 
@@ -136,13 +138,11 @@ function init(){
     nameInput.value = nameProfile.textContent;
     jobInput.value = jobProfile.textContent;
 
-    document.addEventListener("keydown", handleEscPress(editForm, editModal, ".modal__hidden"));
     openPopup(editModal);
     enableValidation(selectors);
   });
 
   addButton.addEventListener("click", () => {
-    document.addEventListener("keydown", handleEscPress(addForm, addModal, ".modal__hidden"));
     openPopup(addModal)
     enableValidation(selectors);
   });
