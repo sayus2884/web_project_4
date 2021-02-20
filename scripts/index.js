@@ -1,5 +1,5 @@
 import Card from './Card.js'
-// import FormValidator from './FormValidator.js'
+import FormValidator from './FormValidator.js'
 
 (function(){
 
@@ -146,12 +146,12 @@ function init(){
     jobInput.value = jobProfile.textContent;
 
     openPopup(editModal);
-    enableValidation(selectors);
+    new FormValidator(selectors, editForm).enableValidation();
   });
 
   addButton.addEventListener("click", () => {
     openPopup(addModal)
-    enableValidation(selectors);
+    new FormValidator(selectors, addForm).enableValidation();
   });
 
   modalList.forEach((modalElement) => {
