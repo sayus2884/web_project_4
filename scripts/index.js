@@ -1,3 +1,9 @@
+import Card from './Card.js'
+// import FormValidator from './FormValidator.js'
+
+(function(){
+
+
 const profileContainer = document.querySelector(".profile");
 const nameProfile = profileContainer.querySelector(".profile__name");
 const jobProfile = profileContainer.querySelector(".profile__job");
@@ -22,40 +28,40 @@ function setProfile(data){
   jobProfile.textContent = data.job;
 }
 
-function setPopupImage(src, title) {
-  imageElement.src = src;
-  titleElement.textContent = title;
-}
+// function setPopupImage(src, title) {
+//   imageElement.src = src;
+//   titleElement.textContent = title;
+// }
 
-function createCard({ title, url }){
+// function createCard({ title, url }){
+//
+//   const cardTemplate = document.querySelector("#place_card").content;
+//   const cardElement = cardTemplate.cloneNode(true);
+//   const imageElement = cardElement.querySelector(".places__image");
+//   const titleElement = cardElement.querySelector(".places__title");
+//   const heartButton = cardElement.querySelector(".places__heart");
+//   const deleteButton = cardElement.querySelector(".places__delete");
+//
+//   titleElement.textContent = title;
+//   imageElement.src = url;
+//
+//   heartButton.addEventListener("click", toggleHeart);
+//   deleteButton.addEventListener("click", deleteCard);
+//   imageElement.addEventListener("click", () => {
+//     setPopupImage(url, title);
+//     openPopup(imagePopupContainer, "image-popup_hidden");
+//   });
+//
+//   return cardElement;
+// }
 
-  const cardTemplate = document.querySelector("#place_card").content;
-  const cardElement = cardTemplate.cloneNode(true);
-  const imageElement = cardElement.querySelector(".places__image");
-  const titleElement = cardElement.querySelector(".places__title");
-  const heartButton = cardElement.querySelector(".places__heart");
-  const deleteButton = cardElement.querySelector(".places__delete");
+// function deleteCard(event){
+//   event.target.closest(".places__card").remove();
+// }
 
-  titleElement.textContent = title;
-  imageElement.src = url;
-
-  heartButton.addEventListener("click", toggleHeart);
-  deleteButton.addEventListener("click", deleteCard);
-  imageElement.addEventListener("click", () => {
-    setPopupImage(url, title);
-    openPopup(imagePopupContainer, "image-popup_hidden");
-  });
-
-  return cardElement;
-}
-
-function deleteCard(event){
-  event.target.closest(".places__card").remove();
-}
-
-function toggleHeart(event){
-  event.target.classList.toggle("places__heart_active");
-}
+// function toggleHeart(event){
+//   event.target.classList.toggle("places__heart_active");
+// }
 
 function openPopup(popup, hiddenClassName="modal_hidden"){
   popup.classList.remove(hiddenClassName);
@@ -77,8 +83,8 @@ function handleEditSubmit(event){
 
 function handleAddSubmit(event){
   event.preventDefault();
-  const card = createCard({ title: titleInput.value, url: urlInput.value });
 
+  const card = new Card(titleInput.value, urlInput.value).createCard();
   gridElement.prepend(card);
 
   closePopup(addModal);
@@ -130,8 +136,9 @@ function init(){
 
   const modalList = document.querySelectorAll(".modal");
 
-  initialCards.forEach((card) => {
-    gridElement.append( createCard(card) );
+  initialCards.forEach(({ title, url }) => {
+    const cardElement = new Card(title, url).createCard()
+    gridElement.append( cardElement );
   });
 
   editButton.addEventListener("click", () => {
@@ -168,3 +175,5 @@ function init(){
 }
 
 init();
+
+})();
