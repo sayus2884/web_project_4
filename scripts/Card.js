@@ -6,8 +6,9 @@ export default class Card {
     this.imagePopupContainer = document.querySelector(".image-popup");
     this.imageElement = this.imagePopupContainer.querySelector(".image-popup__image");
     this.titleElement = this.imagePopupContainer.querySelector(".image-popup__title");
-  }
 
+    this.hiddenClass = "image-popup_hidden";
+  }
 
   createCard(){
 
@@ -25,7 +26,7 @@ export default class Card {
     deleteButton.addEventListener("click", this._deleteCard);
     imageElement.addEventListener("click", () => {
       this._setPopupImage(this.url, this.title);
-      this._openPopup(this.imagePopupContainer, "image-popup_hidden");
+      this._openPopup(this.imagePopupContainer);
     });
 
     return cardElement;
@@ -44,22 +45,20 @@ export default class Card {
     this.titleElement.textContent = title;
   }
 
-  _openPopup(popup, hiddenClassName="modal_hidden"){
-    popup.classList.remove(hiddenClassName);
-    const formElement = popup.querySelector(".form");
-    document.addEventListener("keydown", this._handleEscPress(popup, hiddenClassName));
+  _openPopup(popup){
+    popup.classList.remove(this.hiddenClass);
+    document.addEventListener("keydown", this._handleEscPress(popup));
   }
 
-  _closePopup(popup, hiddenClassName="modal_hidden"){
-    popup.classList.add(hiddenClassName);
-    const formElement = popup.querySelector(".form");
-    document.removeEventListener("keydown", this._handleEscPress(popup, hiddenClassName));
+  _closePopup(popup){
+    popup.classList.add(this.hiddenClass);
+    document.removeEventListener("keydown", this._handleEscPress(popup));
   }
 
-  _handleEscPress(modalElement, hiddenClass){
+  _handleEscPress(modalElement){
     return (event) => {
       if (event.keyCode === 27) {
-        this._closePopup(modalElement, hiddenClass);
+        this._closePopup(modalElement);
       }
     }
   }

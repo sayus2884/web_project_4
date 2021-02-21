@@ -3,7 +3,6 @@ import FormValidator from './FormValidator.js'
 
 (function(){
 
-
 const profileContainer = document.querySelector(".profile");
 const nameProfile = profileContainer.querySelector(".profile__name");
 const jobProfile = profileContainer.querySelector(".profile__job");
@@ -27,41 +26,6 @@ function setProfile(data){
   nameProfile.textContent = data.name;
   jobProfile.textContent = data.job;
 }
-
-// function setPopupImage(src, title) {
-//   imageElement.src = src;
-//   titleElement.textContent = title;
-// }
-
-// function createCard({ title, url }){
-//
-//   const cardTemplate = document.querySelector("#place_card").content;
-//   const cardElement = cardTemplate.cloneNode(true);
-//   const imageElement = cardElement.querySelector(".places__image");
-//   const titleElement = cardElement.querySelector(".places__title");
-//   const heartButton = cardElement.querySelector(".places__heart");
-//   const deleteButton = cardElement.querySelector(".places__delete");
-//
-//   titleElement.textContent = title;
-//   imageElement.src = url;
-//
-//   heartButton.addEventListener("click", toggleHeart);
-//   deleteButton.addEventListener("click", deleteCard);
-//   imageElement.addEventListener("click", () => {
-//     setPopupImage(url, title);
-//     openPopup(imagePopupContainer, "image-popup_hidden");
-//   });
-//
-//   return cardElement;
-// }
-
-// function deleteCard(event){
-//   event.target.closest(".places__card").remove();
-// }
-
-// function toggleHeart(event){
-//   event.target.classList.toggle("places__heart_active");
-// }
 
 function openPopup(popup, hiddenClassName="modal_hidden"){
   popup.classList.remove(hiddenClassName);
@@ -90,22 +54,15 @@ function handleAddSubmit(event){
   closePopup(addModal);
 }
 
-function hasClass(element, classname){
-  return Array.from(element.classList).includes(classname.replace(".", ""));
-}
-
-function closeAndResetModalForm(formElement, modalElement, hiddenClass) {
+function closeAndResetModalForm(formElement, modalElement) {
   closePopup(modalElement);
   formElement.reset();
 }
 
-function handleEscPress(formElement, modalElement, hiddenClass){
+function handleEscPress(formElement, modalElement){
   return (event) => {
-    if (event.keyCode === 27 && !hasClass(modalElement, hiddenClass)) {
-
-      formElement ?
-      closeAndResetModalForm(formElement, modalElement, hiddenClass) :
-      closePopup(modalElement, hiddenClass);
+    if (event.keyCode === 27) {
+      closeAndResetModalForm(formElement, modalElement)
     }
   }
 }
@@ -146,13 +103,14 @@ function init(){
     jobInput.value = jobProfile.textContent;
 
     openPopup(editModal);
-    new FormValidator(selectors, editForm).enableValidation();
   });
 
   addButton.addEventListener("click", () => {
     openPopup(addModal)
-    new FormValidator(selectors, addForm).enableValidation();
   });
+
+  new FormValidator(selectors, editForm).enableValidation();
+  new FormValidator(selectors, addForm).enableValidation();
 
   modalList.forEach((modalElement) => {
     const overlayElement = modalElement.querySelector(".modal__overlay");
