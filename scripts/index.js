@@ -1,6 +1,7 @@
 import Card from './Card.js'
 import FormValidator from './FormValidator.js'
 import { openPopup, closePopup, closeAndResetModalForm } from "./utils.js"
+import { initialCards } from "./data.js";
 
 const profileContainer = document.querySelector(".profile");
 const nameProfile = profileContainer.querySelector(".profile__name");
