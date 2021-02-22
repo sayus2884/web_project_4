@@ -1,3 +1,5 @@
+import { openPopup, closePopup } from "./utils.js"
+
 export default class Card {
   constructor(title, url){
     this.title = title;
@@ -26,7 +28,7 @@ export default class Card {
     deleteButton.addEventListener("click", this._deleteCard);
     imageElement.addEventListener("click", () => {
       this._setPopupImage(this.url, this.title);
-      this._openPopup(this.imagePopupContainer);
+      openPopup(this.imagePopupContainer, this.hiddenClass);
     });
 
     return cardElement;
@@ -43,23 +45,5 @@ export default class Card {
   _setPopupImage(src, title) {
     this.imageElement.src = src;
     this.titleElement.textContent = title;
-  }
-
-  _openPopup(popup){
-    popup.classList.remove(this.hiddenClass);
-    document.addEventListener("keydown", this._handleEscPress(popup));
-  }
-
-  _closePopup(popup){
-    popup.classList.add(this.hiddenClass);
-    document.removeEventListener("keydown", this._handleEscPress(popup));
-  }
-
-  _handleEscPress(modalElement){
-    return (event) => {
-      if (event.keyCode === 27) {
-        this._closePopup(modalElement);
-      }
-    }
   }
 }

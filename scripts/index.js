@@ -1,7 +1,6 @@
 import Card from './Card.js'
 import FormValidator from './FormValidator.js'
-
-(function(){
+import { openPopup, closePopup, closeAndResetModalForm } from "./utils.js"
 
 const profileContainer = document.querySelector(".profile");
 const nameProfile = profileContainer.querySelector(".profile__name");
@@ -27,18 +26,6 @@ function setProfile(data){
   jobProfile.textContent = data.job;
 }
 
-function openPopup(popup, hiddenClassName="modal_hidden"){
-  popup.classList.remove(hiddenClassName);
-  const formElement = popup.querySelector(".form");
-  document.addEventListener("keydown", handleEscPress(formElement, popup, hiddenClassName));
-}
-
-function closePopup(popup, hiddenClassName="modal_hidden"){
-  popup.classList.add(hiddenClassName);
-  const formElement = popup.querySelector(".form");
-  document.removeEventListener("keydown", handleEscPress(formElement, popup, hiddenClassName));
-}
-
 function handleEditSubmit(event){
   event.preventDefault();
   setProfile({ name: nameInput.value, job: jobInput.value })
@@ -52,19 +39,6 @@ function handleAddSubmit(event){
   gridElement.prepend(card);
 
   closePopup(addModal);
-}
-
-function closeAndResetModalForm(formElement, modalElement) {
-  closePopup(modalElement);
-  formElement.reset();
-}
-
-function handleEscPress(formElement, modalElement){
-  return (event) => {
-    if (event.keyCode === 27) {
-      closeAndResetModalForm(formElement, modalElement)
-    }
-  }
 }
 
 function init(){
@@ -133,5 +107,3 @@ function init(){
 }
 
 init();
-
-})();
