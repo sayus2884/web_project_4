@@ -1,6 +1,7 @@
 import Card from './components/Card.js'
 import FormValidator from './components/FormValidator.js'
 import Popup from './components/Popup.js'
+import PopupWithForm from './components/PopupWithForm.js'
 import PopupWithImage from './components/PopupWithImage.js'
 import Section from './components/Section.js'
 import UserInfo from './components/UserInfo.js'
@@ -24,24 +25,6 @@ const urlInput = addPopup.querySelector(".form__item_type_url");
 
 const imagePopup = document.querySelector("#popup__image");
 
-let userProfile;
-let popupWithImage;
-
-function handleEditSubmit(event){
-  event.preventDefault();
-  userProfile.setUserInfo({ name: nameInput.value, job: jobInput.value });
-  closePopup(editPopup);
-}
-
-function handleAddSubmit(event){
-  event.preventDefault();
-
-  const card = new Card(titleInput.value, urlInput.value).createCard(popupWithImage);
-  gridElement.prepend(card);
-
-  closePopup(addPopup);
-}
-
 function init(){
 
   const person = {
@@ -50,17 +33,26 @@ function init(){
   };
 
   // init here locally, set handlers lcoally too
-  userProfile = new UserInfo(person);
+  const userProfile = new UserInfo(person);
 
-  popupWithImage = new PopupWithImage(imagePopup);
+  const popupWithImage = new PopupWithImage(imagePopup);
 
-  const selectors = {
-    inputSelector: ".form__input",
-    submitButtonSelector: ".form__submit-button",
-    inactiveButtonClass: "form__submit-button_inactive",
-    inputErrorClass: "form__input-error_active",
-    activeInputErrorClass: "form__item_error_active"
-  }
+  const addPopupForm = new PopupWithForm({
+    onSubmit: ({ title, url }) => {
+      const card = new Card(title, url).createCard(popupWithImage);
+      gridElement.prepend(card);
+      addPopupForm.close();
+    }},
+    addPopup);
+  addPopupForm.setEventListeners()
+
+  const editPopupForm = new PopupWithForm({
+    onSubmit: ({ name, job}) => {
+      userProfile.setUserInfo({ name, job });
+      editPopupForm.close();
+    }},
+    editPopup);
+  editPopupForm.setEventListeners()
 
   const editButton = profileContainer.querySelector(".profile__edit-button");
   const addButton = profileContainer.querySelector(".profile__add-button");
@@ -88,19 +80,14 @@ function init(){
   });
 
   addButton.addEventListener("click", () => {
-    openPopup(addPopup)
+    addPopupForm.open();
   });
-
-  new FormValidator(selectors, editForm).enableValidation();
-  new FormValidator(selectors, addForm).enableValidation();
 
   popupList.forEach((popupElement) => {
     const popup = new Popup(popupElement);
     popup.setEventListeners();
   });
 
-  editForm.addEventListener("submit", handleEditSubmit);
-  addForm.addEventListener("submit", handleAddSubmit);
 }
 
 init();

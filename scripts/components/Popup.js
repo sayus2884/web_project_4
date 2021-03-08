@@ -16,13 +16,8 @@ export default class Popup {
   }
 
   close(){
-
     this._popupElement.classList.add(hiddenClass);
     document.removeEventListener("keydown", this._handleEscPress);
-
-    if (this._formElement) {
-      this._formElement.reset();
-    }
   }
 
   _handleEscPress(event) {
