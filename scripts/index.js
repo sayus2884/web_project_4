@@ -1,5 +1,6 @@
 import Card from './components/Card.js'
 import FormValidator from './components/FormValidator.js'
+import Popup from './components/Popup.js'
 import Section from './components/Section.js'
 import UserInfo from './components/UserInfo.js'
 import { openPopup, closePopup } from "./utils.js"
@@ -19,10 +20,6 @@ const jobInput = editPopup.querySelector(".form__item_type_job");
 const addPopup = document.querySelector("#popup__add");
 const titleInput = addPopup.querySelector(".form__item_type_title");
 const urlInput = addPopup.querySelector(".form__item_type_url");
-
-const popupImageContainer = document.querySelector("#popup__image");
-const imageElement = popupImageContainer.querySelector(".popup__image");
-const titleElement = popupImageContainer.querySelector(".popup__title");
 
 let userProfile;
 
@@ -66,9 +63,6 @@ function init(){
   const editForm = editPopup.querySelector(".popup__form");
   const addForm = addPopup.querySelector(".popup__form");
 
-  const closeImagePopupButton = popupImageContainer.querySelector(".popup__close-button");
-  const popupOverlay = popupImageContainer.querySelector(".popup__overlay");
-
   const popupList = document.querySelectorAll(".popup");
 
   const gridSection =  new Section({
@@ -96,21 +90,13 @@ function init(){
   new FormValidator(selectors, addForm).enableValidation();
 
   popupList.forEach((popupElement) => {
-    const overlayElement = popupElement.querySelector(".popup__overlay");
-    const closeButton = popupElement.querySelector(".popup__close-button");
-    const formElement = popupElement.querySelector(".popup__form");
-
-    overlayElement.addEventListener("click", () => closePopup(popupElement, formElement));
-    closeButton.addEventListener("click", () => closePopup(popupElement, formElement));
+    console.log(popupElement);
+    const popup = new Popup(popupElement);
+    popup.setEventListeners();
   });
 
   editForm.addEventListener("submit", handleEditSubmit);
   addForm.addEventListener("submit", handleAddSubmit);
-
-  popupOverlay.addEventListener("click", () => {
-    closePopup(popupImageContainer);
-  });
-  closeImagePopupButton.addEventListener("click", () => closePopup(popupImageContainer));
 }
 
 init();
