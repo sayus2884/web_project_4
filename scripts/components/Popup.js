@@ -10,14 +10,13 @@ export default class Popup {
   }
 
   open(){
-    this._popupElement.remove(hiddenClass);
-    const formElement = popup.querySelector(".form");
-
-    document.addEventListener("keydown", this._handleEscPress.bind(null, { formElement }));
-
+    this._popupElement.classList.remove(hiddenClass);
+    const formElement = this._popupElement.querySelector(".form");
+    document.addEventListener("keydown", this._handleEscPress.bind(this));
   }
 
   close(){
+
     this._popupElement.classList.add(hiddenClass);
     document.removeEventListener("keydown", this._handleEscPress);
 
@@ -26,9 +25,9 @@ export default class Popup {
     }
   }
 
-  _handleEscPress({ formElement }, event) {
+  _handleEscPress(event) {
     if (event.keyCode === 27) {
-      this.close(formElement);
+      this.close();
     }
   }
 

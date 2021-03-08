@@ -1,6 +1,7 @@
 import Card from './components/Card.js'
 import FormValidator from './components/FormValidator.js'
 import Popup from './components/Popup.js'
+import PopupWithImage from './components/PopupWithImage.js'
 import Section from './components/Section.js'
 import UserInfo from './components/UserInfo.js'
 import { openPopup, closePopup } from "./utils.js"
@@ -21,7 +22,10 @@ const addPopup = document.querySelector("#popup__add");
 const titleInput = addPopup.querySelector(".form__item_type_title");
 const urlInput = addPopup.querySelector(".form__item_type_url");
 
+const imagePopup = document.querySelector("#popup__image");
+
 let userProfile;
+let popupWithImage;
 
 function handleEditSubmit(event){
   event.preventDefault();
@@ -32,7 +36,7 @@ function handleEditSubmit(event){
 function handleAddSubmit(event){
   event.preventDefault();
 
-  const card = new Card(titleInput.value, urlInput.value).createCard();
+  const card = new Card(titleInput.value, urlInput.value).createCard(popupWithImage);
   gridElement.prepend(card);
 
   closePopup(addPopup);
@@ -48,6 +52,7 @@ function init(){
   // init here locally, set handlers lcoally too
   userProfile = new UserInfo(person);
 
+  popupWithImage = new PopupWithImage(imagePopup);
 
   const selectors = {
     inputSelector: ".form__input",
@@ -68,7 +73,7 @@ function init(){
   const gridSection =  new Section({
     items: initialCards,
     renderer: ({ title, url }) => {
-      const cardElement = new Card(title, url).createCard()
+      const cardElement = new Card(title, url).createCard(popupWithImage)
       gridSection.addItem(cardElement);
     }
   }, gridElement);
@@ -90,7 +95,6 @@ function init(){
   new FormValidator(selectors, addForm).enableValidation();
 
   popupList.forEach((popupElement) => {
-    console.log(popupElement);
     const popup = new Popup(popupElement);
     popup.setEventListeners();
   });

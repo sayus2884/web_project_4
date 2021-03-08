@@ -1,18 +1,13 @@
-import { openPopup, closePopup } from "../utils.js"
+import { openPopup } from "../utils.js"
+
 
 export default class Card {
   constructor(title, url){
     this.title = title;
     this.url = url
-
-    this.imagePopupContainer = document.querySelector("#popup__image");
-    this.imageElement = this.imagePopupContainer.querySelector(".popup__image");
-    this.titleElement = this.imagePopupContainer.querySelector(".popup__name");
-
-    this.hiddenClass = "popup_hidden";
   }
 
-  createCard(){
+  createCard(popupWithImage){
 
     const cardTemplate = document.querySelector("#place_card").content;
     const cardElement = cardTemplate.cloneNode(true);
@@ -27,8 +22,7 @@ export default class Card {
     heartButton.addEventListener("click", this._toggleHeart);
     deleteButton.addEventListener("click", this._deleteCard);
     imageElement.addEventListener("click", () => {
-      this._setPopupImage(this.url, this.title);
-      openPopup(this.imagePopupContainer, this.hiddenClass);
+      popupWithImage.open({ src: this.url, name: this.title });
     });
 
     return cardElement;
@@ -40,10 +34,5 @@ export default class Card {
 
   _deleteCard(event){
     event.target.closest(".places__card").remove();
-  }
-
-  _setPopupImage(src, title) {
-    this.imageElement.src = src;
-    this.titleElement.textContent = title;
   }
 }
