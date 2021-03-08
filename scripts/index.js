@@ -1,6 +1,7 @@
 import Card from './components/Card.js'
 import FormValidator from './components/FormValidator.js'
 import Section from './components/Section.js'
+import UserInfo from './components/UserInfo.js'
 import { openPopup, closePopup, closeAndResetModalForm } from "./utils.js"
 import { initialCards } from "./data.js";
 
@@ -23,14 +24,11 @@ const imagePopupContainer = document.querySelector(".image-popup");
 const imageElement = imagePopupContainer.querySelector(".image-popup__image");
 const titleElement = imagePopupContainer.querySelector(".image-popup__title");
 
-function setProfile(data){
-  nameProfile.textContent = data.name;
-  jobProfile.textContent = data.job;
-}
+let userProfile;
 
 function handleEditSubmit(event){
   event.preventDefault();
-  setProfile({ name: nameInput.value, job: jobInput.value })
+  userProfile.setUserInfo({ name: nameInput.value, job: jobInput.value });
   closePopup(editModal);
 }
 
@@ -49,6 +47,10 @@ function init(){
     name: 'Philliney Chandler',
     job: "Space Mobile Task Force Cadet"
   };
+
+  // init here locally, set handlers lcoally too
+  userProfile = new UserInfo(person);
+
 
   const selectors = {
     inputSelector: ".form__input",
@@ -109,8 +111,6 @@ function init(){
     closePopup(imagePopupContainer, "image-popup_hidden");
   });
   closeImagePopupButton.addEventListener("click", () => closePopup(imagePopupContainer, "image-popup_hidden"));
-
-  setProfile(person);
 }
 
 init();
