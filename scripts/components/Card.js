@@ -1,6 +1,3 @@
-import { openPopup } from "../utils.js"
-
-
 export default class Card {
   constructor(title, url){
     this.title = title;

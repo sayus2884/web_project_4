@@ -24,3 +24,9 @@ export const initialCards = [
     url: "https://code.s3.yandex.net/web-code/lago.jpg"
   }
 ];
+
+
+export const person = {
+  name: 'Philliney Chandler',
+  job: "Space Mobile Task Force Cadet"
+};
