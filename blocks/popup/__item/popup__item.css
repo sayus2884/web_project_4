@@ -1,4 +1,4 @@
-.modal__item {
+.popup__item {
   margin: 0;
   padding: 0 0 13.26px;
   margin-bottom: 30px;
@@ -9,10 +9,10 @@
   line-height: 16.94px;
 }
 
-.modal__item:focus {
+.popup__item:focus {
   outline: none;
 }
 
-.modal__item:last-of-type {
+.popup__item:last-of-type {
   margin-bottom: 48px;
 }

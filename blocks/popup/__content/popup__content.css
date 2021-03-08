@@ -1,4 +1,4 @@
-.modal__content {
+.popup__content {
   position: relative;
   width: 100%;
   max-width: 430px;
@@ -11,7 +11,7 @@
 
 
 @media screen and (max-width: 600px) {
-  .modal__content {
+  .popup__content {
     width: 282px;
   }
 }

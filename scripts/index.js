@@ -2,7 +2,7 @@ import Card from './components/Card.js'
 import FormValidator from './components/FormValidator.js'
 import Section from './components/Section.js'
 import UserInfo from './components/UserInfo.js'
-import { openPopup, closePopup, closeAndResetModalForm } from "./utils.js"
+import { openPopup, closePopup } from "./utils.js"
 import { initialCards } from "./data.js";
 
 const profileContainer = document.querySelector(".profile");
@@ -12,24 +12,24 @@ const jobProfile = profileContainer.querySelector(".profile__job");
 const placesContainer = document.querySelector(".places");
 const gridElement = placesContainer.querySelector(".places__grid");
 
-const editModal = document.querySelector("#modal__edit");
-const nameInput = editModal.querySelector(".form__item_type_name");
-const jobInput = editModal.querySelector(".form__item_type_job");
+const editPopup = document.querySelector("#popup__edit");
+const nameInput = editPopup.querySelector(".form__item_type_name");
+const jobInput = editPopup.querySelector(".form__item_type_job");
 
-const addModal = document.querySelector("#modal__add");
-const titleInput = addModal.querySelector(".form__item_type_title");
-const urlInput = addModal.querySelector(".form__item_type_url");
+const addPopup = document.querySelector("#popup__add");
+const titleInput = addPopup.querySelector(".form__item_type_title");
+const urlInput = addPopup.querySelector(".form__item_type_url");
 
-const imagePopupContainer = document.querySelector(".image-popup");
-const imageElement = imagePopupContainer.querySelector(".image-popup__image");
-const titleElement = imagePopupContainer.querySelector(".image-popup__title");
+const popupImageContainer = document.querySelector("#popup__image");
+const imageElement = popupImageContainer.querySelector(".popup__image");
+const titleElement = popupImageContainer.querySelector(".popup__title");
 
 let userProfile;
 
 function handleEditSubmit(event){
   event.preventDefault();
   userProfile.setUserInfo({ name: nameInput.value, job: jobInput.value });
-  closePopup(editModal);
+  closePopup(editPopup);
 }
 
 function handleAddSubmit(event){
@@ -38,7 +38,7 @@ function handleAddSubmit(event){
   const card = new Card(titleInput.value, urlInput.value).createCard();
   gridElement.prepend(card);
 
-  closePopup(addModal);
+  closePopup(addPopup);
 }
 
 function init(){
@@ -63,13 +63,13 @@ function init(){
   const editButton = profileContainer.querySelector(".profile__edit-button");
   const addButton = profileContainer.querySelector(".profile__add-button");
 
-  const editForm = editModal.querySelector(".modal__form");
-  const addForm = addModal.querySelector(".modal__form");
+  const editForm = editPopup.querySelector(".popup__form");
+  const addForm = addPopup.querySelector(".popup__form");
 
-  const closeImagePopupButton = imagePopupContainer.querySelector(".image-popup__close-button");
-  const popupOverlay = imagePopupContainer.querySelector(".image-popup__overlay");
+  const closeImagePopupButton = popupImageContainer.querySelector(".popup__close-button");
+  const popupOverlay = popupImageContainer.querySelector(".popup__overlay");
 
-  const modalList = document.querySelectorAll(".modal");
+  const popupList = document.querySelectorAll(".popup");
 
   const gridSection =  new Section({
     items: initialCards,
@@ -85,32 +85,32 @@ function init(){
     nameInput.value = nameProfile.textContent;
     jobInput.value = jobProfile.textContent;
 
-    openPopup(editModal);
+    openPopup(editPopup);
   });
 
   addButton.addEventListener("click", () => {
-    openPopup(addModal)
+    openPopup(addPopup)
   });
 
   new FormValidator(selectors, editForm).enableValidation();
   new FormValidator(selectors, addForm).enableValidation();
 
-  modalList.forEach((modalElement) => {
-    const overlayElement = modalElement.querySelector(".modal__overlay");
-    const closeButton = modalElement.querySelector(".modal__close-button");
-    const formElement = modalElement.querySelector(".modal__form");
+  popupList.forEach((popupElement) => {
+    const overlayElement = popupElement.querySelector(".popup__overlay");
+    const closeButton = popupElement.querySelector(".popup__close-button");
+    const formElement = popupElement.querySelector(".popup__form");
 
-    overlayElement.addEventListener("click", () => closeAndResetModalForm(formElement, modalElement));
-    closeButton.addEventListener("click", () => closeAndResetModalForm(formElement, modalElement));
+    overlayElement.addEventListener("click", () => closePopup(popupElement, formElement));
+    closeButton.addEventListener("click", () => closePopup(popupElement, formElement));
   });
 
   editForm.addEventListener("submit", handleEditSubmit);
   addForm.addEventListener("submit", handleAddSubmit);
 
   popupOverlay.addEventListener("click", () => {
-    closePopup(imagePopupContainer, "image-popup_hidden");
+    closePopup(popupImageContainer);
   });
-  closeImagePopupButton.addEventListener("click", () => closePopup(imagePopupContainer, "image-popup_hidden"));
+  closeImagePopupButton.addEventListener("click", () => closePopup(popupImageContainer));
 }
 
 init();

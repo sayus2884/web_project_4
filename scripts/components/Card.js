@@ -5,11 +5,11 @@ export default class Card {
     this.title = title;
     this.url = url
 
-    this.imagePopupContainer = document.querySelector(".image-popup");
-    this.imageElement = this.imagePopupContainer.querySelector(".image-popup__image");
-    this.titleElement = this.imagePopupContainer.querySelector(".image-popup__title");
+    this.imagePopupContainer = document.querySelector("#popup__image");
+    this.imageElement = this.imagePopupContainer.querySelector(".popup__image");
+    this.titleElement = this.imagePopupContainer.querySelector(".popup__name");
 
-    this.hiddenClass = "image-popup_hidden";
+    this.hiddenClass = "popup_hidden";
   }
 
   createCard(){

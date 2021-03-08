@@ -42,13 +42,13 @@
       </footer>
 
 
-      <div class="modal modal_hidden" id="modal__edit">
+      <div class="popup popup_hidden" id="popup__edit">
 
-        <div class="modal__overlay"></div>
+        <div class="popup__overlay"></div>
 
-        <div class="modal__content">
-          <h2 class="modal__title">Edit profile</h2>
-          <form class="modal__form form">
+        <div class="popup__content">
+          <h2 class="popup__title">Edit profile</h2>
+          <form class="popup__form form">
 
             <label class="form__field">
               <input class="form__input form__item form__item_type_name"
@@ -67,18 +67,18 @@
             <button class="form__submit-button" type="submit">Save</button>
 
           </form>
-          <button class="modal__close-button" type="button" aria-label="close" title="close"></button>
+          <button class="popup__close-button" type="button" aria-label="close" title="close"></button>
         </div>
 
       </div>
 
-      <div class="modal modal_hidden" id="modal__add">
+      <div class="popup popup_hidden" id="popup__add">
 
-          <div class="modal__overlay"></div>
+          <div class="popup__overlay"></div>
 
-          <div class="modal__content">
-            <h2 class="modal__title">New Place</h2>
-            <form class="modal__form form">
+          <div class="popup__content">
+            <h2 class="popup__title">New Place</h2>
+            <form class="popup__form form">
 
               <label class="form__field">
                 <input class="form__input form__item form__item_type_title"
@@ -93,19 +93,19 @@
               </label>
               <button class="form__submit-button" type="submit">Create</button>
             </form>
-            <button class="modal__close-button" type="button" aria-label="close" title="close"></button>
+            <button class="popup__close-button" type="button" aria-label="close" title="close"></button>
           </div>
 
       </div>
 
-      <div class="image-popup image-popup_hidden">
+      <div class="popup popup_hidden" id="popup__image">
 
-        <div class="image-popup__overlay"></div>
+        <div class="popup__overlay"></div>
 
-        <div class="image-popup__container">
-          <button class="image-popup__close-button" type="button" aria-label="close" title="close"></button>
-          <img class="image-popup__image" src="https://code.s3.yandex.net/web-code/yosemite.jpg" alt="image preview">
-          <p class="image-popup__title">Image name</p>
+        <div class="popup__container">
+          <button class="popup__close-button" type="button" aria-label="close" title="close"></button>
+          <img class="popup__image" src="https://code.s3.yandex.net/web-code/yosemite.jpg" alt="image preview">
+          <p class="popup__name">Image name</p>
         </div>
       </div>
     </div>
