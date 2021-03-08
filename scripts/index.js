@@ -1,5 +1,6 @@
-import Card from './Card.js'
-import FormValidator from './FormValidator.js'
+import Card from './components/Card.js'
+import FormValidator from './components/FormValidator.js'
+import Section from './components/Section.js'
 import { openPopup, closePopup, closeAndResetModalForm } from "./utils.js"
 import { initialCards } from "./data.js";
 
@@ -68,10 +69,15 @@ function init(){
 
   const modalList = document.querySelectorAll(".modal");
 
-  initialCards.forEach(({ title, url }) => {
-    const cardElement = new Card(title, url).createCard()
-    gridElement.append( cardElement );
-  });
+  const gridSection =  new Section({
+    items: initialCards,
+    renderer: ({ title, url }) => {
+      const cardElement = new Card(title, url).createCard()
+      gridSection.addItem(cardElement);
+    }
+  }, gridElement);
+
+  gridSection.render();
 
   editButton.addEventListener("click", () => {
     nameInput.value = nameProfile.textContent;
