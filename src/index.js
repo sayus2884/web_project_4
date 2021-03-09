@@ -30,7 +30,9 @@ const cardTemplate = document.querySelector("#place_card").content;
 
 function init(){
 
-  const userProfile = new UserInfo(person);
+  const userProfile = new UserInfo({ nameSelector: nameProfile, jobSelector: jobProfile });
+  userProfile.setUserInfo(person);
+
   const popupWithImage = new PopupWithImage(imagePopup);
 
   const gridSection =  new Section({
