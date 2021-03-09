@@ -1,5 +1,4 @@
 /node_modules/
-app.js
-package.json
+dist
 package-lock.json
 texts.txt

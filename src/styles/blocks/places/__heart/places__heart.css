@@ -11,7 +11,7 @@
   background-color: rgba(0,0,0,0);
   outline: none;
 
-  background-image: url("../../../images/heart-icon.svg");
+  background-image: url("../../../../images/heart-icon.svg");
 }
 
 .places__heart:hover {
