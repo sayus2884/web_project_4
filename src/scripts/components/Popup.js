@@ -6,13 +6,13 @@ export default class Popup {
 
     this._overlayElement = popupElement.querySelector(".popup__overlay");
     this._closeButtonElement = popupElement.querySelector(".popup__close-button");
-    this._formElement = popupElement.querySelector(".popup__form");
+
+    this._handleEscPress = this._handleEscPress.bind(this);
   }
 
   open(){
     this._popupElement.classList.remove(hiddenClass);
-    const formElement = this._popupElement.querySelector(".form");
-    document.addEventListener("keydown", this._handleEscPress.bind(this));
+    document.addEventListener("keydown", this._handleEscPress);
   }
 
   close(){
