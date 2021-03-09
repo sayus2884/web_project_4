@@ -22,6 +22,9 @@ const editPopup = document.querySelector("#popup__edit");
 const addPopup = document.querySelector("#popup__add");
 const imagePopup = document.querySelector("#popup__image");
 
+const nameInput = editPopup.querySelector(".form__item_type_name");
+const jobInput = editPopup.querySelector(".form__item_type_job");
+
 function init(){
 
   const userProfile = new UserInfo(person);
