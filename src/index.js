@@ -33,34 +33,6 @@ function init(){
   const userProfile = new UserInfo(person);
   const popupWithImage = new PopupWithImage(imagePopup);
 
-  const addPopupForm = new PopupWithForm({
-    validator: (form) => {
-      new FormValidator(selectors, form).enableValidation();
-    },
-    onSubmit: ({ title, url }) => {
-      const card = new Card({
-        title,
-        url,
-        handleCardClick: () => {
-          popupWithImage.open({ src: url, name: title });
-        }
-      }, cardTemplate).createCard();
-      gridElement.prepend(card);
-      addPopupForm.close();
-    }},
-    addPopup);
-
-
-  const editPopupForm = new PopupWithForm({
-    validator: (form) => {
-      new FormValidator(selectors, form).enableValidation();
-    },
-    onSubmit: ({ name, job}) => {
-      userProfile.setUserInfo({ name, job });
-      editPopupForm.close();
-    }},
-    editPopup);
-
   const gridSection =  new Section({
     items: initialCards,
     renderer: ({ title, url }) => {
@@ -75,6 +47,34 @@ function init(){
       gridSection.addItem(cardElement);
     }
   }, gridElement);
+
+  const addPopupForm = new PopupWithForm({
+    validator: (form) => {
+      new FormValidator(selectors, form).enableValidation();
+    },
+    onSubmit: ({ title, url }) => {
+      const card = new Card({
+        title,
+        url,
+        handleCardClick: () => {
+          popupWithImage.open({ src: url, name: title });
+        }
+      }, cardTemplate).createCard();
+      gridSection.prependItem(card);
+      addPopupForm.close();
+    }},
+    addPopup);
+
+
+  const editPopupForm = new PopupWithForm({
+    validator: (form) => {
+      new FormValidator(selectors, form).enableValidation();
+    },
+    onSubmit: ({ name, job}) => {
+      userProfile.setUserInfo({ name, job });
+      editPopupForm.close();
+    }},
+    editPopup);
 
   editButton.addEventListener("click", () => {
     const { name, job } = userProfile.getUserInfo();
