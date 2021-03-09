@@ -27,7 +27,7 @@
   background-color: rgba(0,0,0,0);
   outline: none;
 
-  background-image: url("../../../images/delete-icon.svg");
+  background-image: url("../../images/delete-icon.svg");
 }
 
 .places__delete:hover {
