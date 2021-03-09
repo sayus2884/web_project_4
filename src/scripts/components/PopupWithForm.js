@@ -1,17 +1,14 @@
-import { selectors } from "../constants.js";
-
 import Popup from "./Popup.js"
-import FormValidator from './FormValidator.js'
 
 export default class PopupWithForm extends Popup{
-  constructor({ onSubmit }, popupElement){
+  constructor({ onSubmit, validator = ()=>{} }, popupElement){
     super(popupElement);
 
     this._onSubmit = onSubmit;
     this._formElement = popupElement.querySelector(".popup__form");
     this._inputList = popupElement.querySelectorAll(".form__input");
 
-    new FormValidator(selectors, this._formElement).enableValidation();
+    validator(this._formElement);
   }
 
   _getInputValues(){

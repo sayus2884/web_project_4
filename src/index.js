@@ -8,6 +8,7 @@ import PopupWithImage from './scripts/components/PopupWithImage.js'
 import Section from './scripts/components/Section.js'
 import UserInfo from './scripts/components/UserInfo.js'
 import { initialCards, person } from "./scripts/data.js";
+import { selectors } from "./scripts/constants.js";
 
 const profileContainer = document.querySelector(".profile");
 const nameProfile = profileContainer.querySelector(".profile__name");
@@ -33,6 +34,9 @@ function init(){
   const popupWithImage = new PopupWithImage(imagePopup);
 
   const addPopupForm = new PopupWithForm({
+    validator: (form) => {
+      new FormValidator(selectors, form).enableValidation();
+    },
     onSubmit: ({ title, url }) => {
       const card = new Card({
         title,
@@ -46,7 +50,11 @@ function init(){
     }},
     addPopup);
 
+
   const editPopupForm = new PopupWithForm({
+    validator: (form) => {
+      new FormValidator(selectors, form).enableValidation();
+    },
     onSubmit: ({ name, job}) => {
       userProfile.setUserInfo({ name, job });
       editPopupForm.close();
