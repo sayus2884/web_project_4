@@ -1,28 +1,28 @@
 export default class Card {
-  constructor(title, url){
-    this.title = title;
-    this.url = url
+  constructor({title, url, handleCardClick}, cardTemplate){
+    this._title = title;
+    this._url = url
+    this._handleCardClick = handleCardClick;
+    this._cardElement = cardTemplate.cloneNode(true);
   }
 
-  createCard(popupWithImage){
+  createCard(){
 
-    const cardTemplate = document.querySelector("#place_card").content;
-    const cardElement = cardTemplate.cloneNode(true);
-    const imageElement = cardElement.querySelector(".places__image");
-    const titleElement = cardElement.querySelector(".places__title");
-    const heartButton = cardElement.querySelector(".places__heart");
-    const deleteButton = cardElement.querySelector(".places__delete");
+    const imageElement = this._cardElement.querySelector(".places__image");
+    const titleElement = this._cardElement.querySelector(".places__title");
+    const heartButton = this._cardElement.querySelector(".places__heart");
+    const deleteButton = this._cardElement.querySelector(".places__delete");
 
-    titleElement.textContent = this.title;
-    imageElement.src = this.url;
+    titleElement.textContent = this._title;
+    imageElement.src = this._url;
 
     heartButton.addEventListener("click", this._toggleHeart);
     deleteButton.addEventListener("click", this._deleteCard);
     imageElement.addEventListener("click", () => {
-      popupWithImage.open({ src: this.url, name: this.title });
+      this._handleCardClick();
     });
 
-    return cardElement;
+    return this._cardElement;
   }
 
   _toggleHeart(event){

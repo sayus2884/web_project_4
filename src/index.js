@@ -25,6 +25,8 @@ const imagePopup = document.querySelector("#popup__image");
 const nameInput = editPopup.querySelector(".form__item_type_name");
 const jobInput = editPopup.querySelector(".form__item_type_job");
 
+const cardTemplate = document.querySelector("#place_card").content;
+
 function init(){
 
   const userProfile = new UserInfo(person);
@@ -32,7 +34,13 @@ function init(){
 
   const addPopupForm = new PopupWithForm({
     onSubmit: ({ title, url }) => {
-      const card = new Card(title, url).createCard(popupWithImage);
+      const card = new Card({
+        title,
+        url,
+        handleCardClick: () => {
+          popupWithImage.open({ src: url, name: title });
+        }
+      }, cardTemplate).createCard();
       gridElement.prepend(card);
       addPopupForm.close();
     }},
@@ -48,7 +56,14 @@ function init(){
   const gridSection =  new Section({
     items: initialCards,
     renderer: ({ title, url }) => {
-      const cardElement = new Card(title, url).createCard(popupWithImage)
+
+      const cardElement = new Card({
+        title,
+        url,
+        handleCardClick: () => {
+          popupWithImage.open({ src: url, name: title });
+        }
+      }, cardTemplate).createCard(popupWithImage);
       gridSection.addItem(cardElement);
     }
   }, gridElement);
