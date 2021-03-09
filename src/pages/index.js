@@ -1,14 +1,14 @@
-import "./pages/index.css"
+import "./index.css"
 
-import Card from './scripts/components/Card.js'
-import FormValidator from './scripts/components/FormValidator.js'
-import Popup from './scripts/components/Popup.js'
-import PopupWithForm from './scripts/components/PopupWithForm.js'
-import PopupWithImage from './scripts/components/PopupWithImage.js'
-import Section from './scripts/components/Section.js'
-import UserInfo from './scripts/components/UserInfo.js'
-import { initialCards, person } from "./scripts/data.js";
-import { selectors } from "./scripts/constants.js";
+import Card from '../scripts/components/Card.js'
+import FormValidator from '../scripts/components/FormValidator.js'
+import Popup from '../scripts/components/Popup.js'
+import PopupWithForm from '../scripts/components/PopupWithForm.js'
+import PopupWithImage from '../scripts/components/PopupWithImage.js'
+import Section from '../scripts/components/Section.js'
+import UserInfo from '../scripts/components/UserInfo.js'
+import { initialCards, person } from "../scripts/data.js";
+import { selectors } from "../scripts/constants.js";
 
 const profileContainer = document.querySelector(".profile");
 const nameProfile = profileContainer.querySelector(".profile__name");
