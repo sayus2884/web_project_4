@@ -9,6 +9,7 @@ import Section from '../scripts/components/Section.js'
 import UserInfo from '../scripts/components/UserInfo.js'
 import { initialCards, person } from "../scripts/data.js";
 import { selectors } from "../scripts/constants.js";
+import { apiFetch, METHODS, key } from "../scripts/api.js";
 
 const profileContainer = document.querySelector(".profile");
 const nameProfile = profileContainer.querySelector(".profile__name");
@@ -28,42 +29,81 @@ const jobInput = editPopup.querySelector(".form__item_type_job");
 
 const cardTemplate = document.querySelector("#place_card").content;
 
+function getServerUserInfo(){
+  const url = `https://around.nomoreparties.co/v1/${key.id}/users/me`;
+  return apiFetch( METHODS.GET, url)
+}
+
+function getServerCards(){
+  const url = `https://around.nomoreparties.co/v1/${key.id}/cards`;
+  return apiFetch(METHODS.GET, url)
+}
+
+function editServerUserInfo(data){
+  const url = `https://around.nomoreparties.co/v1/${key.id}/users/me`;
+  return apiFetch(METHODS.PATCH, url, data)
+}
+
+function addServerCard(data){
+  const url = `https://around.nomoreparties.co/v1/${key.id}/cards`;
+  return apiFetch(METHODS.POST, url, data)
+}
+
 function init(){
 
   const userProfile = new UserInfo({ nameSelector: nameProfile, jobSelector: jobProfile });
-  userProfile.setUserInfo(person);
+
+  const user = getServerUserInfo()
+  .then(({ name, about }) => {
+    userProfile.setUserInfo({ name, job: about });
+  });
+
+  let gridSection
+  const cards = getServerCards()
+  .then((cards) => {
+    gridSection =  new Section({
+      items: cards,
+      renderer: ({ name, link }) => {
+
+        const cardElement = new Card({
+          title: name,
+          url: link,
+          handleCardClick: () => {
+            popupWithImage.open({ src: link, name });
+          }
+        }, cardTemplate).createCard(popupWithImage);
+        gridSection.addItem(cardElement);
+      }
+    }, gridElement);
+    return cards
+  })
+  .finally(() => {
+    gridSection.render();
+  });
+
 
   const popupWithImage = new PopupWithImage(imagePopup);
-
-  const gridSection =  new Section({
-    items: initialCards,
-    renderer: ({ title, url }) => {
-
-      const cardElement = new Card({
-        title,
-        url,
-        handleCardClick: () => {
-          popupWithImage.open({ src: url, name: title });
-        }
-      }, cardTemplate).createCard(popupWithImage);
-      gridSection.addItem(cardElement);
-    }
-  }, gridElement);
 
   const addPopupForm = new PopupWithForm({
     validator: (form) => {
       new FormValidator(selectors, form).enableValidation();
     },
     onSubmit: ({ title, url }) => {
-      const card = new Card({
-        title,
-        url,
-        handleCardClick: () => {
-          popupWithImage.open({ src: url, name: title });
-        }
-      }, cardTemplate).createCard();
-      gridSection.prependItem(card);
-      addPopupForm.close();
+
+      addServerCard({ name: title, link: url })
+      .then(() => {
+
+        const card = new Card({
+          title,
+          url,
+          handleCardClick: () => {
+            popupWithImage.open({ src: url, name: title });
+          }
+        }, cardTemplate).createCard();
+        gridSection.prependItem(card);
+        addPopupForm.close();
+
+      })
     }},
     addPopup);
 
@@ -73,8 +113,13 @@ function init(){
       new FormValidator(selectors, form).enableValidation();
     },
     onSubmit: ({ name, job}) => {
-      userProfile.setUserInfo({ name, job });
-      editPopupForm.close();
+
+      editServerUserInfo({ name, about: job })
+      .then(( res ) => {
+        userProfile.setUserInfo({ name, job });
+        editPopupForm.close();
+      });
+
     }},
     editPopup);
 
@@ -92,7 +137,6 @@ function init(){
   popupWithImage.setEventListeners();
   addPopupForm.setEventListeners()
   editPopupForm.setEventListeners()
-  gridSection.render();
 }
 
 init();
