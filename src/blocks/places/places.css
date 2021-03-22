@@ -1,36 +1,14 @@
 @import url("./__card/places__card.css");
+@import url("./__counter/places__counter.css");
+@import url("./__delete/places__delete.css");
 @import url("./__grid/places__grid.css");
 @import url("./__heart/places__heart.css");
 @import url("./__heart/_active/places__heart_active.css");
 @import url("./__image/places__image.css");
+@import url("./__like-contianer/places__like-contianer.css");
 @import url("./__title/places__title.css");
 @import url("./__title-container/places__title-container.css");
 
 .places {
   padding-top: 50px;
-}
-
-.places__delete {
-  position: absolute;
-  top:18px;
-  right: 15px;
-
-  min-width: 20.76px;
-  height: 18.13px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-
-  border: none;
-  margin: 0;
-  padding: 0;
-  background-color: rgba(0,0,0,0);
-  outline: none;
-
-  background-image: url("../../images/delete-icon.svg");
-}
-
-.places__delete:hover {
-  cursor: pointer;
-  opacity: .6;
 }
