@@ -15,6 +15,7 @@ import { apiFetch, METHODS, key } from "../scripts/api.js";
 const profileContainer = document.querySelector(".profile");
 const nameProfile = profileContainer.querySelector(".profile__name");
 const jobProfile = profileContainer.querySelector(".profile__job");
+const avatarProfile = profileContainer.querySelector(".profile__avatar");
 const editButton = profileContainer.querySelector(".profile__edit-button");
 const addButton = profileContainer.querySelector(".profile__add-button");
 
@@ -66,14 +67,20 @@ function unlikeServerCard(id){
   return apiFetch(METHODS.DELETE, url)
 }
 
+function updateServerCard(id){
+  const url = `https://around.nomoreparties.co/v1/${key.id}/users/me/avatar`;
+  return apiFetch(METHODS.PATCH, url)
+}
+
 function init(){
 
-  const userProfile = new UserInfo({ nameSelector: nameProfile, jobSelector: jobProfile });
+  const userProfile = new UserInfo({ nameSelector: nameProfile, jobSelector: jobProfile, avatarSelector: avatarProfile });
 
   getServerUserInfo()
   .then((res) => {
-    const { name, about } = res;
+    const { name, about, avatar } = res;
     userProfile.setUserInfo({ name, job: about });
+    userProfile.setAvatar(avatar);
 
     return res
   })
