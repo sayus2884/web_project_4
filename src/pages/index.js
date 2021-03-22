@@ -63,11 +63,12 @@ function init(){
   .then((cards) => {
     gridSection =  new Section({
       items: cards,
-      renderer: ({ name, link }) => {
+      renderer: ({ name, link, likes }) => {
 
         const cardElement = new Card({
           title: name,
           url: link,
+          likes: likes.length,
           handleCardClick: () => {
             popupWithImage.open({ src: link, name });
           }
@@ -88,7 +89,7 @@ function init(){
     validator: (form) => {
       new FormValidator(selectors, form).enableValidation();
     },
-    onSubmit: ({ title, url }) => {
+    onSubmit: ({ title, url, likes }) => {
 
       addServerCard({ name: title, link: url })
       .then(() => {
@@ -96,6 +97,7 @@ function init(){
         const card = new Card({
           title,
           url,
+          likes: likes.length,
           handleCardClick: () => {
             popupWithImage.open({ src: url, name: title });
           }
