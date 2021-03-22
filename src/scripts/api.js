@@ -6,6 +6,7 @@ export const key = {
 export const METHODS = {
   GET: "GET",
   POST: "POST",
+  PUT: "PUT",
   PATCH: "PATCH",
   DELETE: "DELETE",
 }
@@ -20,7 +21,7 @@ export function apiFetch(method, url, data = {}){
 
   }
 
-  if (method !== METHODS.GET) {
+  if (method !== METHODS.GET && method !== METHODS.DELETE) {
     params = Object.assign(params, { body: JSON.stringify(data) })
   }
 

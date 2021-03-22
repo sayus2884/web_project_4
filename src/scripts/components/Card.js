@@ -1,10 +1,16 @@
 export default class Card {
-  constructor({title, url, likes, handleCardClick}, cardTemplate){
+  constructor({title, url, likes, id, handleCardClick, handleCardDeleteButton}, cardTemplate){
     this._title = title;
-    this._url = url
+    this._url = url;
+    this._id = id;
     this._handleCardClick = handleCardClick;
+    this._handleCardDeleteButton = handleCardDeleteButton;
     this._cardElement = cardTemplate.cloneNode(true);
     this._likes = likes
+  }
+
+  getId(){
+    return this._id;
   }
 
   createCard(){
@@ -20,7 +26,9 @@ export default class Card {
     imageElement.src = this._url;
 
     heartButton.addEventListener("click", this._toggleHeart);
-    deleteButton.addEventListener("click", this._deleteCard);
+    deleteButton.addEventListener("click", (event) => {
+        this._handleCardDeleteButton(this, this._deleteCard(event));
+    });
     imageElement.addEventListener("click", () => {
       this._handleCardClick();
     });
@@ -33,6 +41,8 @@ export default class Card {
   }
 
   _deleteCard(event){
-    event.target.closest(".places__card").remove();
+    return () => {
+      event.target.closest(".places__card").remove();
+    }
   }
 }

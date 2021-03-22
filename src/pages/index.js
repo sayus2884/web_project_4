@@ -3,6 +3,7 @@ import "./index.css"
 import Card from '../scripts/components/Card.js'
 import FormValidator from '../scripts/components/FormValidator.js'
 import Popup from '../scripts/components/Popup.js'
+import PopupWithDelete from '../scripts/components/PopupWithDelete.js'
 import PopupWithForm from '../scripts/components/PopupWithForm.js'
 import PopupWithImage from '../scripts/components/PopupWithImage.js'
 import Section from '../scripts/components/Section.js'
@@ -20,6 +21,7 @@ const addButton = profileContainer.querySelector(".profile__add-button");
 const placesContainer = document.querySelector(".places");
 const gridElement = placesContainer.querySelector(".places__grid");
 
+const deletePopup = document.querySelector("#popup__delete");
 const editPopup = document.querySelector("#popup__edit");
 const addPopup = document.querySelector("#popup__add");
 const imagePopup = document.querySelector("#popup__image");
@@ -49,6 +51,11 @@ function addServerCard(data){
   return apiFetch(METHODS.POST, url, data)
 }
 
+function deleteServerCard(id){
+  const url = `https://around.nomoreparties.co/v1/${key.id}/cards/${id}`;
+  return apiFetch(METHODS.DELETE, url)
+}
+
 function init(){
 
   const userProfile = new UserInfo({ nameSelector: nameProfile, jobSelector: jobProfile });
@@ -63,14 +70,19 @@ function init(){
   .then((cards) => {
     gridSection =  new Section({
       items: cards,
-      renderer: ({ name, link, likes }) => {
+      renderer: ({ name, link, likes, _id }) => {
 
         const cardElement = new Card({
+          id: _id,
           title: name,
           url: link,
           likes: likes.length,
           handleCardClick: () => {
             popupWithImage.open({ src: link, name });
+          },
+          handleCardDeleteButton: (card, callback) => {
+            console.log("this is a card" +card);
+            popupWithDelete.open(card, callback)
           }
         }, cardTemplate).createCard(popupWithImage);
         gridSection.addItem(cardElement);
@@ -83,6 +95,13 @@ function init(){
   });
 
 
+  const popupWithDelete = new PopupWithDelete({
+    handleDelete: (id) => {
+      deleteServerCard(id);
+      popupWithDelete.close();
+    }
+  }, deletePopup)
+
   const popupWithImage = new PopupWithImage(imagePopup);
 
   const addPopupForm = new PopupWithForm({
@@ -92,14 +111,18 @@ function init(){
     onSubmit: ({ title, url, likes }) => {
 
       addServerCard({ name: title, link: url })
-      .then(() => {
+      .then((res) => {
 
         const card = new Card({
+          id: res._id,
           title,
           url,
-          likes: likes.length,
+          likes: 0,
           handleCardClick: () => {
             popupWithImage.open({ src: url, name: title });
+          },
+          handleCardDeleteButton: (card, callback) => {
+            popupWithDelete.open(card, callback);
           }
         }, cardTemplate).createCard();
         gridSection.prependItem(card);
@@ -137,6 +160,7 @@ function init(){
   });
 
   popupWithImage.setEventListeners();
+  popupWithDelete.setEventListeners();
   addPopupForm.setEventListeners()
   editPopupForm.setEventListeners()
 }
