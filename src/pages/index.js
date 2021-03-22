@@ -56,113 +56,139 @@ function deleteServerCard(id){
   return apiFetch(METHODS.DELETE, url)
 }
 
+function likeServerCard(id){
+  const url = `https://around.nomoreparties.co/v1/${key.id}/cards/likes/${id}`;
+  return apiFetch(METHODS.PUT, url)
+}
+
+function unlikeServerCard(id){
+  const url = `https://around.nomoreparties.co/v1/${key.id}/cards/likes/${id}`;
+  return apiFetch(METHODS.DELETE, url)
+}
+
 function init(){
 
   const userProfile = new UserInfo({ nameSelector: nameProfile, jobSelector: jobProfile });
 
-  const user = getServerUserInfo()
-  .then(({ name, about }) => {
+  getServerUserInfo()
+  .then((res) => {
+    const { name, about } = res;
     userProfile.setUserInfo({ name, job: about });
-  });
 
-  let gridSection
-  const cards = getServerCards()
-  .then((cards) => {
-    gridSection =  new Section({
-      items: cards,
-      renderer: ({ name, link, likes, _id }) => {
-
-        const cardElement = new Card({
-          id: _id,
-          title: name,
-          url: link,
-          likes: likes.length,
-          handleCardClick: () => {
-            popupWithImage.open({ src: link, name });
-          },
-          handleCardDeleteButton: (card, callback) => {
-            console.log("this is a card" +card);
-            popupWithDelete.open(card, callback)
-          }
-        }, cardTemplate).createCard(popupWithImage);
-        gridSection.addItem(cardElement);
-      }
-    }, gridElement);
-    return cards
+    return res
   })
-  .finally(() => {
-    gridSection.render();
-  });
+
+  .then((user) => {
+
+    let gridSection
+    const cards = getServerCards()
+    .then((cards) => {
+      gridSection =  new Section({
+        items: cards,
+        renderer: ({ name, link, likes, _id }) => {
+
+          const cardElement = new Card({
+            user, // hotfix solution for liked cards upon init
+            id: _id,
+            title: name,
+            url: link,
+            likes: likes,
+            handleCardClick: () => {
+              popupWithImage.open({ src: link, name });
+            },
+            handleCardDeleteButton: (card, callback) => {
+              popupWithDelete.open(card, callback)
+            },
+            handleCardLikeButton: (card) => {
+
+              if (card.isLiked()) {
+                return unlikeServerCard(card.getId());
+              } else {
+                return likeServerCard(card.getId());
+              }
+
+            }
+          }, cardTemplate).createCard(popupWithImage);
+          gridSection.addItem(cardElement);
+        }
+      }, gridElement);
+      return cards
+    })
+    .finally(() => {
+      gridSection.render();
+    });
 
 
-  const popupWithDelete = new PopupWithDelete({
-    handleDelete: (id) => {
-      deleteServerCard(id);
-      popupWithDelete.close();
-    }
-  }, deletePopup)
+    const popupWithDelete = new PopupWithDelete({
+      handleDelete: (id) => {
+        deleteServerCard(id);
+        popupWithDelete.close();
+      }
+    }, deletePopup)
 
-  const popupWithImage = new PopupWithImage(imagePopup);
+    const popupWithImage = new PopupWithImage(imagePopup);
 
-  const addPopupForm = new PopupWithForm({
-    validator: (form) => {
-      new FormValidator(selectors, form).enableValidation();
-    },
-    onSubmit: ({ title, url, likes }) => {
+    const addPopupForm = new PopupWithForm({
+      validator: (form) => {
+        new FormValidator(selectors, form).enableValidation();
+      },
+      onSubmit: ({ title, url, likes }) => {
 
-      addServerCard({ name: title, link: url })
-      .then((res) => {
+        addServerCard({ name: title, link: url })
+        .then((res) => {
 
-        const card = new Card({
-          id: res._id,
-          title,
-          url,
-          likes: 0,
-          handleCardClick: () => {
-            popupWithImage.open({ src: url, name: title });
-          },
-          handleCardDeleteButton: (card, callback) => {
-            popupWithDelete.open(card, callback);
-          }
-        }, cardTemplate).createCard();
-        gridSection.prependItem(card);
-        addPopupForm.close();
+          const card = new Card({
+            id: res._id,
+            title,
+            url,
+            likes: [],
+            handleCardClick: () => {
+              popupWithImage.open({ src: url, name: title });
+            },
+            handleCardDeleteButton: (card, callback) => {
+              popupWithDelete.open(card, callback);
+            }
+          }, cardTemplate).createCard();
+          gridSection.prependItem(card);
+          addPopupForm.close();
 
-      })
-    }},
-    addPopup);
+        })
+      }},
+      addPopup);
 
 
-  const editPopupForm = new PopupWithForm({
-    validator: (form) => {
-      new FormValidator(selectors, form).enableValidation();
-    },
-    onSubmit: ({ name, job}) => {
+    const editPopupForm = new PopupWithForm({
+      validator: (form) => {
+        new FormValidator(selectors, form).enableValidation();
+      },
+      onSubmit: ({ name, job}) => {
 
-      editServerUserInfo({ name, about: job })
-      .then(( res ) => {
-        userProfile.setUserInfo({ name, job });
-        editPopupForm.close();
-      });
+        editServerUserInfo({ name, about: job })
+        .then(( res ) => {
+          userProfile.setUserInfo({ name, job });
+          editPopupForm.close();
+        });
 
-    }},
-    editPopup);
+      }},
+      editPopup);
 
-  editButton.addEventListener("click", () => {
-    const { name, job } = userProfile.getUserInfo();
-    nameInput.value = name;
-    jobInput.value = job;
-    editPopupForm.open();
-  });
+    editButton.addEventListener("click", () => {
+      const { name, job } = userProfile.getUserInfo();
+      nameInput.value = name;
+      jobInput.value = job;
+      editPopupForm.open();
+    });
 
-  addButton.addEventListener("click", () => {
-    addPopupForm.open();
-  });
+    addButton.addEventListener("click", () => {
+      addPopupForm.open();
+    });
 
-  popupWithImage.setEventListeners();
-  popupWithDelete.setEventListeners();
-  addPopupForm.setEventListeners()
-  editPopupForm.setEventListeners()
+    popupWithImage.setEventListeners();
+    popupWithDelete.setEventListeners();
+    addPopupForm.setEventListeners()
+    editPopupForm.setEventListeners()
+
+  })
 }
 
 init();

@@ -1,16 +1,24 @@
 export default class Card {
-  constructor({title, url, likes, id, handleCardClick, handleCardDeleteButton}, cardTemplate){
+  constructor({user, title, url, likes, id, isLiked, handleCardClick, handleCardDeleteButton, handleCardLikeButton }, cardTemplate){
+    this._user = user;
+
     this._title = title;
     this._url = url;
     this._id = id;
     this._handleCardClick = handleCardClick;
     this._handleCardDeleteButton = handleCardDeleteButton;
+    this._handleCardLikeButton = handleCardLikeButton;
     this._cardElement = cardTemplate.cloneNode(true);
-    this._likes = likes
+    this._likes = likes;
+    this._likeCount = likes.length;
   }
 
   getId(){
     return this._id;
+  }
+
+  getLikes(){
+    return this._likes;
   }
 
   createCard(){
@@ -22,18 +30,37 @@ export default class Card {
     const deleteButton = this._cardElement.querySelector(".places__delete");
 
     titleElement.textContent = this._title;
-    counterElement.textContent = this._likes;
+    counterElement.textContent = this._likes.length;
     imageElement.src = this._url;
 
-    heartButton.addEventListener("click", this._toggleHeart);
+    heartButton.addEventListener("click", (event) => {
+      this._handleCardLikeButton(this)
+      .then((res) => {
+        this._toggleHeart(event)
+        this._likes = res.likes;
+        counterElement.textContent = res.likes.length;
+      })
+    });
+
     deleteButton.addEventListener("click", (event) => {
         this._handleCardDeleteButton(this, this._deleteCard(event));
     });
+
     imageElement.addEventListener("click", () => {
       this._handleCardClick();
     });
 
+    if (this.isLiked()) {
+      heartButton.classList.toggle("places__heart_active");
+    }
+
     return this._cardElement;
+  }
+
+  isLiked(){
+    return this._likes.some(( data ) => {
+      return data._id = this._user._id
+    });
   }
 
   _toggleHeart(event){
