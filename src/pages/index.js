@@ -75,10 +75,11 @@ function init(){
     .then((cards) => {
       gridSection =  new Section({
         items: cards,
-        renderer: ({ name, link, likes, _id }) => {
+        renderer: ({ name, link, likes, _id, owner }) => {
 
           const cardElement = new Card({
             user, // hotfix solution for liked cards on init
+            owner,
             id: _id,
             title: name,
             url: link,
@@ -119,11 +120,12 @@ function init(){
         addPopupForm.setButtonText("Creating Card...");
 
         api.addCard({ name: title, link: url })
-        .then((res) => {
+        .then(({ owner, _id }) => {
 
           const card = new Card({
             user, // hotfix solution for liked cards on init
-            id: res._id,
+            owner,
+            id: _id,
             title,
             url,
             likes: [],

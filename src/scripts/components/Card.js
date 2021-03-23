@@ -1,7 +1,8 @@
 export default class Card {
-  constructor({user, title, url, likes, id, isLiked, handleCardClick, handleCardDeleteButton, handleCardLikeButton }, cardTemplate){
+  constructor({user, owner, title, url, likes, id, isLiked, handleCardClick, handleCardDeleteButton, handleCardLikeButton }, cardTemplate){
     this._user = user;
 
+    this._owner = owner;
     this._title = title;
     this._url = url;
     this._id = id;
@@ -22,7 +23,6 @@ export default class Card {
   }
 
   createCard(){
-
     const imageElement = this._cardElement.querySelector(".places__image");
     const titleElement = this._cardElement.querySelector(".places__title");
     const counterElement = this._cardElement.querySelector(".places__counter");
@@ -42,9 +42,14 @@ export default class Card {
       })
     });
 
-    deleteButton.addEventListener("click", (event) => {
+    if (this._user._id === this._owner._id) {
+      deleteButton.addEventListener("click", (event) => {
         this._handleCardDeleteButton(this, this._deleteCard(event));
-    });
+      });
+
+    } else {
+      this._hideDeleteButton(deleteButton);
+    }
 
     imageElement.addEventListener("click", () => {
       this._handleCardClick();
@@ -61,6 +66,10 @@ export default class Card {
     return this._likes.some(( data ) => {
       return data._id = this._user._id
     });
+  }
+
+  _hideDeleteButton(deleteButton){
+    deleteButton.classList.add("places__delete_hidden")
   }
 
   _toggleHeart(event){
