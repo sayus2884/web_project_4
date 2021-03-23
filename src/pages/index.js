@@ -40,6 +40,10 @@ const key = {
   groupId: "group-7"
 }
 
+// function setButtonText(buttonElement, text){
+//   buttonElement.textContent = text;
+// }
+
 function init(){
 
   const api = new Api(key)
@@ -110,7 +114,9 @@ function init(){
       validator: (form) => {
         new FormValidator(selectors, form).enableValidation();
       },
-      onSubmit: ({ title, url, likes }) => {
+      onSubmit: ({ title, url, likes }, event) => {
+
+        addPopupForm.setButtonText("Creating Card...");
 
         api.addCard({ name: title, link: url })
         .then((res) => {
@@ -131,8 +137,10 @@ function init(){
           }, cardTemplate).createCard();
           gridSection.prependItem(card);
           addPopupForm.close();
-
         })
+        .finally(() => {
+          addPopupForm.setButtonText("Create");
+        });
       }},
       addPopup);
 
@@ -142,10 +150,14 @@ function init(){
       },
       onSubmit: ({ name, job}) => {
 
+        editPopupForm.setButtonText("Saving...");
         api.editUserInfo({ name, about: job })
         .then(( res ) => {
           userProfile.setUserInfo({ name, job });
           editPopupForm.close();
+        })
+        .finally(() => {
+          editPopupForm.setButtonText("Save");
         });
 
       }},
@@ -157,11 +169,15 @@ function init(){
       },
       onSubmit: ({ avatar }) => {
 
+        editAvatarPopupForm.setButtonText("Saving...");
         api.updateAvatar({ avatar })
         .then(( res ) => {
           userProfile.setAvatar(avatar);
           editAvatarPopupForm.close();
-        });
+        })
+        .finally(() => {
+          editAvatarPopupForm.setButtonText("Save");
+        });;
 
       }},
       editAvatarPopup);
