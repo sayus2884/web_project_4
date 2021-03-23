@@ -35,51 +35,10 @@ const avatarInput = editAvatarPopup.querySelector(".form__item_type_avatar");
 
 const cardTemplate = document.querySelector("#place_card").content;
 
-
 const key = {
   token: "90d739e4-9945-4145-b00f-fb0273ca4af9",
   groupId: "group-7"
 }
-// function getUserInfo(){
-//   const url = `https://around.nomoreparties.co/v1/${key.id}/users/me`;
-//   return apiFetch( METHODS.GET, url)
-// }
-//
-// function getInitialCards(){
-//   const url = `https://around.nomoreparties.co/v1/${key.id}/cards`;
-//   return apiFetch(METHODS.GET, url)
-// }
-//
-// function api.editUserInfo(data){
-//   const url = `https://around.nomoreparties.co/v1/${key.id}/users/me`;
-//   return apiFetch(METHODS.PATCH, url, data)
-// }
-//
-// function addCard(data){
-//   const url = `https://around.nomoreparties.co/v1/${key.id}/cards`;
-//   return apiFetch(METHODS.POST, url, data)
-// }
-//
-// function deleteCard(id){
-//   const url = `https://around.nomoreparties.co/v1/${key.id}/cards/${id}`;
-//   return apiFetch(METHODS.DELETE, url)
-// }
-//
-// function likeCard(id){
-//   const url = `https://around.nomoreparties.co/v1/${key.id}/cards/likes/${id}`;
-//   return apiFetch(METHODS.PUT, url)
-// }
-//
-// function unlikeCard(id){
-//   const url = `https://around.nomoreparties.co/v1/${key.id}/cards/likes/${id}`;
-//   return apiFetch(METHODS.DELETE, url)
-// }
-//
-// function updateAvatar(data){
-//   const url = `https://around.nomoreparties.co/v1/${key.id}/users/me/avatar`;
-//   return apiFetch(METHODS.PATCH, url, data)
-// }
-
 
 function init(){
 
