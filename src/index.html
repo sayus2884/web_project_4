@@ -18,7 +18,12 @@
         <section class="profile">
           <div class="profile__container">
 
-            <img class="profile__avatar" src="<%= require('./images/avatar.jpg')%>" alt="avatar">
+            <div class="profile__avatar-container">
+              <div class="profile__avatar-overlay">
+                <button class="profile__avatar-edit-button" type="button" name="button"></button>
+              </div>
+              <img class="profile__avatar" src="<%= require('./images/avatar.jpg')%>" alt="avatar">
+            </div>
             <div class="profile__info">
               <div class="profile__name-container">
                 <h2 class="profile__name"></h2>
