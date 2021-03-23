@@ -1,8 +1,3 @@
-export const key = {
-  token: "90d739e4-9945-4145-b00f-fb0273ca4af9",
-  id: "group-7"
-}
-
 export const METHODS = {
   GET: "GET",
   POST: "POST",
@@ -11,31 +6,78 @@ export const METHODS = {
   DELETE: "DELETE",
 }
 
-export function apiFetch(method, url, data = {}){
-  let params = {
-    method,
-    headers: {
-      authorization: key.token,
-      "Content-Type": "application/json"
-    },
-
+export default class Api {
+  constructor({ groupId, token }){
+    this._id = groupId;
+    this._token = token
   }
 
-  if (method !== METHODS.GET && method !== METHODS.DELETE) {
-    params = Object.assign(params, { body: JSON.stringify(data) })
+  getUserInfo(){
+    const url = `https://around.nomoreparties.co/v1/${this._id}/users/me`;
+    return this._fetch( METHODS.GET, url)
   }
 
-  return fetch(url, params)
-  .then( res => {
+  getInitialCards(){
+    const url = `https://around.nomoreparties.co/v1/${this._id}/cards`;
+    return this._fetch(METHODS.GET, url)
+  }
 
-    if (res.ok) {
-      return res.json()
-    } else {
-      return Promise.reject(res.status)
+  editUserInfo(data){
+    const url = `https://around.nomoreparties.co/v1/${this._id}/users/me`;
+    return this._fetch(METHODS.PATCH, url, data)
+  }
+
+  addCard(data){
+    const url = `https://around.nomoreparties.co/v1/${this._id}/cards`;
+    return this._fetch(METHODS.POST, url, data)
+  }
+
+  deleteCard(id){
+    const url = `https://around.nomoreparties.co/v1/${this._id}/cards/${id}`;
+    return this._fetch(METHODS.DELETE, url)
+  }
+
+  likeCard(id){
+    const url = `https://around.nomoreparties.co/v1/${this._id}/cards/likes/${id}`;
+    return this._fetch(METHODS.PUT, url)
+  }
+
+  unlikeCard(id){
+    const url = `https://around.nomoreparties.co/v1/${this._id}/cards/likes/${id}`;
+    return this._fetch(METHODS.DELETE, url)
+  }
+
+  updateAvatar(data){
+    const url = `https://around.nomoreparties.co/v1/${this._id}/users/me/avatar`;
+    return this._fetch(METHODS.PATCH, url, data)
+  }
+
+  _fetch(method, url, data = {}){
+    let params = {
+      method,
+      headers: {
+        authorization: this._token,
+        "Content-Type": "application/json"
+      },
+
     }
-  })
 
-  .catch((err) =>{
-    console.error(`Status code: ${err}.`)
-  })
+    if (method !== METHODS.GET && method !== METHODS.DELETE) {
+      params = Object.assign(params, { body: JSON.stringify(data) })
+    }
+
+    return fetch(url, params)
+    .then( res => {
+
+      if (res.ok) {
+        return res.json()
+      } else {
+        return Promise.reject(res.status)
+      }
+    })
+
+    .catch((err) =>{
+      console.error(`Status code: ${err}.`)
+    })
+  }
 }

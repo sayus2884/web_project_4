@@ -10,7 +10,7 @@ import Section from '../scripts/components/Section.js'
 import UserInfo from '../scripts/components/UserInfo.js'
 import { initialCards, person } from "../scripts/data.js";
 import { selectors } from "../scripts/constants.js";
-import { apiFetch, METHODS, key } from "../scripts/api.js";
+import Api from "../scripts/api.js";
 
 const profileContainer = document.querySelector(".profile");
 const nameProfile = profileContainer.querySelector(".profile__name");
@@ -35,51 +35,59 @@ const avatarInput = editAvatarPopup.querySelector(".form__item_type_avatar");
 
 const cardTemplate = document.querySelector("#place_card").content;
 
-function getServerUserInfo(){
-  const url = `https://around.nomoreparties.co/v1/${key.id}/users/me`;
-  return apiFetch( METHODS.GET, url)
-}
 
-function getServerCards(){
-  const url = `https://around.nomoreparties.co/v1/${key.id}/cards`;
-  return apiFetch(METHODS.GET, url)
+const key = {
+  token: "90d739e4-9945-4145-b00f-fb0273ca4af9",
+  groupId: "group-7"
 }
+// function getUserInfo(){
+//   const url = `https://around.nomoreparties.co/v1/${key.id}/users/me`;
+//   return apiFetch( METHODS.GET, url)
+// }
+//
+// function getInitialCards(){
+//   const url = `https://around.nomoreparties.co/v1/${key.id}/cards`;
+//   return apiFetch(METHODS.GET, url)
+// }
+//
+// function api.editUserInfo(data){
+//   const url = `https://around.nomoreparties.co/v1/${key.id}/users/me`;
+//   return apiFetch(METHODS.PATCH, url, data)
+// }
+//
+// function addCard(data){
+//   const url = `https://around.nomoreparties.co/v1/${key.id}/cards`;
+//   return apiFetch(METHODS.POST, url, data)
+// }
+//
+// function deleteCard(id){
+//   const url = `https://around.nomoreparties.co/v1/${key.id}/cards/${id}`;
+//   return apiFetch(METHODS.DELETE, url)
+// }
+//
+// function likeCard(id){
+//   const url = `https://around.nomoreparties.co/v1/${key.id}/cards/likes/${id}`;
+//   return apiFetch(METHODS.PUT, url)
+// }
+//
+// function unlikeCard(id){
+//   const url = `https://around.nomoreparties.co/v1/${key.id}/cards/likes/${id}`;
+//   return apiFetch(METHODS.DELETE, url)
+// }
+//
+// function updateAvatar(data){
+//   const url = `https://around.nomoreparties.co/v1/${key.id}/users/me/avatar`;
+//   return apiFetch(METHODS.PATCH, url, data)
+// }
 
-function editServerUserInfo(data){
-  const url = `https://around.nomoreparties.co/v1/${key.id}/users/me`;
-  return apiFetch(METHODS.PATCH, url, data)
-}
-
-function addServerCard(data){
-  const url = `https://around.nomoreparties.co/v1/${key.id}/cards`;
-  return apiFetch(METHODS.POST, url, data)
-}
-
-function deleteServerCard(id){
-  const url = `https://around.nomoreparties.co/v1/${key.id}/cards/${id}`;
-  return apiFetch(METHODS.DELETE, url)
-}
-
-function likeServerCard(id){
-  const url = `https://around.nomoreparties.co/v1/${key.id}/cards/likes/${id}`;
-  return apiFetch(METHODS.PUT, url)
-}
-
-function unlikeServerCard(id){
-  const url = `https://around.nomoreparties.co/v1/${key.id}/cards/likes/${id}`;
-  return apiFetch(METHODS.DELETE, url)
-}
-
-function updateServerAvatar(data){
-  const url = `https://around.nomoreparties.co/v1/${key.id}/users/me/avatar`;
-  return apiFetch(METHODS.PATCH, url, data)
-}
 
 function init(){
 
+  const api = new Api(key)
+
   const userProfile = new UserInfo({ nameSelector: nameProfile, jobSelector: jobProfile, avatarSelector: avatarProfile });
 
-  getServerUserInfo()
+  api.getUserInfo()
   .then((res) => {
     const { name, about, avatar } = res;
     userProfile.setUserInfo({ name, job: about });
@@ -90,15 +98,24 @@ function init(){
 
   .then((user) => {
 
-    let gridSection
-    const cards = getServerCards()
+    function handleCardLikeButton(card) {
+
+      if (card.isLiked()) {
+        return api.unlikeCard(card.getId());
+      } else {
+        return api.likeCard(card.getId());
+      }
+    }
+
+    let gridSection;
+    const cards = api.getInitialCards()
     .then((cards) => {
       gridSection =  new Section({
         items: cards,
         renderer: ({ name, link, likes, _id }) => {
 
           const cardElement = new Card({
-            user, // hotfix solution for liked cards upon init
+            user, // hotfix solution for liked cards on init
             id: _id,
             title: name,
             url: link,
@@ -109,15 +126,7 @@ function init(){
             handleCardDeleteButton: (card, callback) => {
               popupWithDelete.open(card, callback)
             },
-            handleCardLikeButton: (card) => {
-
-              if (card.isLiked()) {
-                return unlikeServerCard(card.getId());
-              } else {
-                return likeServerCard(card.getId());
-              }
-
-            }
+            handleCardLikeButton,
           }, cardTemplate).createCard(popupWithImage);
           gridSection.addItem(cardElement);
         }
@@ -131,7 +140,7 @@ function init(){
 
     const popupWithDelete = new PopupWithDelete({
       handleDelete: (id) => {
-        deleteServerCard(id);
+        api.deleteCard(id);
         popupWithDelete.close();
       }
     }, deletePopup)
@@ -144,10 +153,11 @@ function init(){
       },
       onSubmit: ({ title, url, likes }) => {
 
-        addServerCard({ name: title, link: url })
+        api.addCard({ name: title, link: url })
         .then((res) => {
 
           const card = new Card({
+            user, // hotfix solution for liked cards on init
             id: res._id,
             title,
             url,
@@ -157,7 +167,8 @@ function init(){
             },
             handleCardDeleteButton: (card, callback) => {
               popupWithDelete.open(card, callback);
-            }
+            },
+            handleCardLikeButton
           }, cardTemplate).createCard();
           gridSection.prependItem(card);
           addPopupForm.close();
@@ -172,7 +183,7 @@ function init(){
       },
       onSubmit: ({ name, job}) => {
 
-        editServerUserInfo({ name, about: job })
+        api.editUserInfo({ name, about: job })
         .then(( res ) => {
           userProfile.setUserInfo({ name, job });
           editPopupForm.close();
@@ -187,7 +198,7 @@ function init(){
       },
       onSubmit: ({ avatar }) => {
 
-        updateServerAvatar({ avatar })
+        api.updateAvatar({ avatar })
         .then(( res ) => {
           userProfile.setAvatar(avatar);
           editAvatarPopupForm.close();
@@ -205,7 +216,6 @@ function init(){
 
     editAvatarButton.addEventListener("click", () => {
       const { avatar } = userProfile.getUserInfo();
-      console.log(avatarInput);
       avatarInput.value = avatar;
       editAvatarPopupForm.open();
     });
