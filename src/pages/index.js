@@ -17,6 +17,7 @@ const nameProfile = profileContainer.querySelector(".profile__name");
 const jobProfile = profileContainer.querySelector(".profile__job");
 const avatarProfile = profileContainer.querySelector(".profile__avatar");
 const editButton = profileContainer.querySelector(".profile__edit-button");
+const editAvatarButton = profileContainer.querySelector(".profile__avatar-edit-button");
 const addButton = profileContainer.querySelector(".profile__add-button");
 
 const placesContainer = document.querySelector(".places");
@@ -24,11 +25,13 @@ const gridElement = placesContainer.querySelector(".places__grid");
 
 const deletePopup = document.querySelector("#popup__delete");
 const editPopup = document.querySelector("#popup__edit");
+const editAvatarPopup = document.querySelector("#popup__edit-avatar");
 const addPopup = document.querySelector("#popup__add");
 const imagePopup = document.querySelector("#popup__image");
 
 const nameInput = editPopup.querySelector(".form__item_type_name");
 const jobInput = editPopup.querySelector(".form__item_type_job");
+const avatarInput = editAvatarPopup.querySelector(".form__item_type_avatar");
 
 const cardTemplate = document.querySelector("#place_card").content;
 
@@ -67,9 +70,9 @@ function unlikeServerCard(id){
   return apiFetch(METHODS.DELETE, url)
 }
 
-function updateServerCard(id){
+function updateServerAvatar(data){
   const url = `https://around.nomoreparties.co/v1/${key.id}/users/me/avatar`;
-  return apiFetch(METHODS.PATCH, url)
+  return apiFetch(METHODS.PATCH, url, data)
 }
 
 function init(){
@@ -82,7 +85,7 @@ function init(){
     userProfile.setUserInfo({ name, job: about });
     userProfile.setAvatar(avatar);
 
-    return res
+    return res;
   })
 
   .then((user) => {
@@ -163,7 +166,6 @@ function init(){
       }},
       addPopup);
 
-
     const editPopupForm = new PopupWithForm({
       validator: (form) => {
         new FormValidator(selectors, form).enableValidation();
@@ -179,11 +181,33 @@ function init(){
       }},
       editPopup);
 
+    const editAvatarPopupForm = new PopupWithForm({
+      validator: (form) => {
+        new FormValidator(selectors, form).enableValidation();
+      },
+      onSubmit: ({ avatar }) => {
+
+        updateServerAvatar({ avatar })
+        .then(( res ) => {
+          userProfile.setAvatar(avatar);
+          editAvatarPopupForm.close();
+        });
+
+      }},
+      editAvatarPopup);
+
     editButton.addEventListener("click", () => {
       const { name, job } = userProfile.getUserInfo();
       nameInput.value = name;
       jobInput.value = job;
       editPopupForm.open();
+    });
+
+    editAvatarButton.addEventListener("click", () => {
+      const { avatar } = userProfile.getUserInfo();
+      console.log(avatarInput);
+      avatarInput.value = avatar;
+      editAvatarPopupForm.open();
     });
 
     addButton.addEventListener("click", () => {
@@ -192,9 +216,9 @@ function init(){
 
     popupWithImage.setEventListeners();
     popupWithDelete.setEventListeners();
-    addPopupForm.setEventListeners()
-    editPopupForm.setEventListeners()
-
+    addPopupForm.setEventListeners();
+    editPopupForm.setEventListeners();
+    editAvatarPopupForm.setEventListeners();
   })
 }
 
