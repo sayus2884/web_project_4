@@ -40,10 +40,6 @@ const key = {
   groupId: "group-7"
 }
 
-// function setButtonText(buttonElement, text){
-//   buttonElement.textContent = text;
-// }
-
 function init(){
 
   const api = new Api(key)
