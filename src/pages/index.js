@@ -40,6 +40,10 @@ const key = {
   groupId: "group-7"
 }
 
+function catchError(error){
+  console.error(`Error: ${error}`);
+}
+
 function init(){
 
   const api = new Api({
@@ -96,6 +100,7 @@ function init(){
       }, gridElement);
       return cards
     })
+    .catch(catchError)
     .finally(() => {
       gridSection.render();
     });
@@ -139,6 +144,7 @@ function init(){
           gridSection.prependItem(card);
           addPopupForm.close();
         })
+        .catch(catchError)
         .finally(() => {
           addPopupForm.setButtonText("Create");
         });
@@ -157,6 +163,7 @@ function init(){
           userProfile.setUserInfo({ name, job });
           editPopupForm.close();
         })
+        .catch(catchError)
         .finally(() => {
           editPopupForm.setButtonText("Save");
         });
@@ -176,6 +183,7 @@ function init(){
           userProfile.setAvatar(avatar);
           editAvatarPopupForm.close();
         })
+        .catch(catchError)
         .finally(() => {
           editAvatarPopupForm.setButtonText("Save");
         });;
@@ -206,7 +214,7 @@ function init(){
     editAvatarPopupForm.setEventListeners();
   })
 
-  .catch((err) => console.error(`Error: ${err}.`));
+  .catch(catchError);
 }
 
 init();
