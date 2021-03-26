@@ -7,48 +7,48 @@ export const METHODS = {
 }
 
 export default class Api {
-  constructor({ groupId, token }){
-    this._id = groupId;
+  constructor({ baseUrl, token }){
+    this._baseUrl = baseUrl;
     this._token = token
   }
 
   getUserInfo(){
-    const url = `https://around.nomoreparties.co/v1/${this._id}/users/me`;
+    const url = `${this._baseUrl}/users/me`;
     return this._fetch( METHODS.GET, url)
   }
 
   getInitialCards(){
-    const url = `https://around.nomoreparties.co/v1/${this._id}/cards`;
+    const url = `${this._baseUrl}/cards`;
     return this._fetch(METHODS.GET, url)
   }
 
   editUserInfo(data){
-    const url = `https://around.nomoreparties.co/v1/${this._id}/users/me`;
+    const url = `${this._baseUrl}/users/me`;
     return this._fetch(METHODS.PATCH, url, data)
   }
 
   addCard(data){
-    const url = `https://around.nomoreparties.co/v1/${this._id}/cards`;
+    const url = `${this._baseUrl}/cards`;
     return this._fetch(METHODS.POST, url, data)
   }
 
   deleteCard(id){
-    const url = `https://around.nomoreparties.co/v1/${this._id}/cards/${id}`;
+    const url = `${this._baseUrl}/cards/${id}`;
     return this._fetch(METHODS.DELETE, url)
   }
 
   likeCard(id){
-    const url = `https://around.nomoreparties.co/v1/${this._id}/cards/likes/${id}`;
+    const url = `${this._baseUrl}/cards/likes/${id}`;
     return this._fetch(METHODS.PUT, url)
   }
 
   unlikeCard(id){
-    const url = `https://around.nomoreparties.co/v1/${this._id}/cards/likes/${id}`;
+    const url = `${this._baseUrl}/cards/likes/${id}`;
     return this._fetch(METHODS.DELETE, url)
   }
 
   updateAvatar(data){
-    const url = `https://around.nomoreparties.co/v1/${this._id}/users/me/avatar`;
+    const url = `${this._baseUrl}/users/me/avatar`;
     return this._fetch(METHODS.PATCH, url, data)
   }
 

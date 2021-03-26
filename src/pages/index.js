@@ -42,7 +42,10 @@ const key = {
 
 function init(){
 
-  const api = new Api(key)
+  const api = new Api({
+    baseUrl: `https://around.nomoreparties.co/v1/${key.groupId}`,
+    token: key.token
+  })
 
   const userProfile = new UserInfo({ nameSelector: nameProfile, jobSelector: jobProfile, avatarSelector: avatarProfile });
 
@@ -189,7 +192,6 @@ function init(){
 
     editAvatarButton.addEventListener("click", () => {
       const { avatar } = userProfile.getUserInfo();
-      avatarInput.value = avatar;
       editAvatarPopupForm.open();
     });
 
@@ -203,6 +205,8 @@ function init(){
     editPopupForm.setEventListeners();
     editAvatarPopupForm.setEventListeners();
   })
+
+  .catch((err) => console.error(`Error: ${err}.`));
 }
 
 init();
